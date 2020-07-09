@@ -1,0 +1,147 @@
+<% include headerAdmin.ejs %> 
+<div id="layoutSidenav_content">
+    <div class = "form-themhang container-fluid">
+        <h1>Sửa đổi chi tiết sản phảm</h1>
+        <% data.forEach(function(dataOfProduct){ %>
+        <form action="/admin/Edit_Product/<%= dataOfProduct._id %>/<%- a%>" method="post" class="formUpload">
+            <label>Thêm ảnh sản phẩm</label>
+            <div id="drag-drop-area"></div>
+            <input type="hidden" name="filesProduct" id="filesProduct" class="filesProduct" value="<%=  (dataOfProduct.image || []).join(',') %> ">
+            <div class="form_img"></div>
+            <script>
+                const XHRUpload = Uppy.XHRUpload;// Định nghĩa biến cho plugin  XHRUpload của uppy, cho phép tải ảnh lên
+                let imgs = [];
+
+                var uppy = Uppy.Core()
+                .use(Uppy.Dashboard, { /* darhboard giao diện*/
+                    inline: true,
+                    target: '#drag-drop-area'
+                })
+                .use(XHRUpload, {
+                    endpoint: '/uploadfileProduct' //Đường dẫn tới folder chứa ảnh sau khi upload
+                });
+
+                uppy.on('complete', (result) => { //sau khi upxong 
+                imgs = [
+                    ...imgs, 
+                    ...result.successful.map(item => item.response.body[0].filename)
+                ];
+                document.getElementsByName('filesProduct')[0].value  += ',' + imgs.toString(',');
+                for (let img of imgs){
+                        let preview = document.createElement('div');
+                          preview.innerHTML = `<img class="img-remove"src="/image_Product/${img}" style="height: 130px;width:130px;">
+                                              <span class="remove3" img-name=${img}"><i id="remove_content_news1"class="far fa-times-circle "></i></span>
+                                              <input type="hidden"value="${img}" name="input_remove_img" >`;
+                                            preview.className = 'ShowImageUploaded col-2';
+                                            $('.ContainershowImgUploaded .row')[0].appendChild(preview);
+                                          }
+                })
+                
+            </script>
+             <hr>
+             <p>Ảnh đã upload</p>
+            <div class="ContainershowImgUploaded">
+              <div class="row">
+                <% if( dataOfProduct.image==''){ %> <!--Nếu dữ liệu ảnh là rỗng-->
+                <% } else{%><!--Nếu có  dữ liệu ảnh-->
+                  <% for (let img of dataOfProduct.image.map(s => s.trim()).filter(i => i)){ %>
+                    <div class="ShowImageUploaded col-2">
+                       <img class="img-remove"src="/image_Product/<%= img %>" style="height: 130px;width:130px;">
+                       <span class="remove3" img-name="<%= img %>"><i id="remove_content_news1"class="far fa-times-circle "></i></span>
+                    </div>   
+                  <% } %>
+              <% } %>
+              </div>
+            </div>
+             <div class="mt-3">
+                 <div class="row">
+                     <div class="col-6">
+                        <label>Nhập tên sản phẩm</label><!--Tên-->
+                        <input type="text" class="form-control" name="product_name" value ="<%= dataOfProduct.product_name %>">
+                        <label>Nhập giá</label>
+                        <input type="text" class="form-control" name="price"value ="<%= dataOfProduct.price %>" >
+                        <label>Nhập số lượng</label>
+                        <input type="text" class="form-control" name="quantity"value ="<%= dataOfProduct.quantity %>" >
+                        <label>Tên hãng</label>
+                        <select class="form-control" id="exampleFormControlSelect1" name="id_category">
+                          <% listBrand.forEach(function(brand){ %>
+                            <% if(dataOfProduct.id_category.toString() === brand._id.toString()) {%>
+                                <option value="<%= brand._id %>" selected><%= brand.category_name %></option>
+                            <% } else {%>
+                                <option value="<%= brand._id %>" > <%= brand.category_name %></option>
+                            <% } %>
+                        <% }) %>
+                        </select>
+                     </div>
+                     <div class="col-6">
+                        <label>Nhập chú thích ( *có thể để trống )</label><!--Chú thích-->
+                        <input type="text" class="form-control" name="description" value ="<%= dataOfProduct.description %>">  
+                        <label>Giá khuyến mãi</label>
+                        <input type="text" class="form-control" name="promotion_price"value ="<%= dataOfProduct.promotion_price %>" >   
+                        <label>Năm sản xuất</label>
+                        <input type="text" class="form-control" name="year" value ="<%= dataOfProduct.year %>" >
+                        <label>Có phải là sản phẩm mới nhất hiện này không ?</label>
+                        <select class="form-control" id="exampleFormControlSelect1" name="TopOrNot">
+                            <% if(dataOfProduct.Top === 'Có') {%>
+                                <option value="<%= dataOfProduct.Top %>" selected><%= dataOfProduct.Top %></option>
+                                <option value="Không" >Không</option>
+                            <% } %>
+                            
+                            <% if(dataOfProduct.Top === 'Không') {%>
+                                <option value="<%= dataOfProduct.Top %>" selected><%= dataOfProduct.Top %></option>
+                                <option value="Có" >Có</option>
+                            <% } %>
+            
+                                
+                        </select>
+                    </div>
+                 </div>
+             </div>
+             <hr>
+             <h4>Thông số kỹ thuật</h4>
+             <div class="">
+                 <div class="row">
+                     <div class="col-6">
+                        <label>Màn hình</label>
+                        <input type="text" class="form-control" name="monitor"value ="<%= dataOfProduct.moniter %>"  >
+                        <label>Camera trước</label>
+                        <input type="text" class="form-control" name="camera_truoc"value ="<%= dataOfProduct.camera_truoc %>"  >
+                        <label>Bộ nhớ</label>
+                        <input type="text" class="form-control" name="memory" value ="<%= dataOfProduct.memory %>">
+                        <label>GPU</label>
+                        <input type="text" class="form-control" name="gpu"value ="<%= dataOfProduct.gpu %>"  >
+                        <label>Hệ điều hành</label>
+                        <input type="text" class="form-control" name="operation"value ="<%= dataOfProduct.operation %>"  >
+                        <label>Thẻ nhớ</label>
+                         <input type="text" class="form-control" name="micro_sd" value ="<%= dataOfProduct.micro_sd %>" >
+                     </div>
+
+                     <div class="col-6">
+                        <label>Ram</label>
+                        <input type="text" class="form-control" name="ram" value ="<%= dataOfProduct.ram %>"  >
+                        <label>Camera sau</label>
+                        <input type="text" class="form-control" name="camera_sau"value ="<%= dataOfProduct.camera_sau %>"   >
+                        <label>CPU</label>
+                        <input type="text" class="form-control" name="cpu" value ="<%= dataOfProduct.cpu %>" >
+                        <label>Pin</label>
+                        <input type="text" class="form-control" name="pin"value ="<%= dataOfProduct.pin %>" >
+                        <label>Thẻ sim</label>
+                        <input type="text" class="form-control" name="sim"value ="<%= dataOfProduct.sim %>"  >
+                        <label>Nguồn gốc</label>
+                        <input type="text" class="form-control" name="origin"value ="<%= dataOfProduct.origin %>"  >    
+                    </div>
+                 </div>
+             </div>
+               
+            <button type="submit" class="btn btn-primary btn-block mt-3">Lưu lại</button>
+          </form>
+          <% })  %>    
+    </div>
+    <footer class="py-4 bg-light mt-auto ml-4">
+        <div class="container-fluid">
+            <p>Được phát triển bởi D2HPhone team</p>
+        </div>
+    </footer>
+</div>
+</body>
+</html>

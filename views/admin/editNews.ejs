@@ -1,0 +1,88 @@
+<% include headerAdmin.ejs %> 
+        <div id="layoutSidenav_content"class="ml-5 mr-5">
+              <main>
+                  <div class="container mt-3 mb-5">
+                    <h3 class="text-center">Trang sửa đổi tin tức</h3>
+                        <div class="addt_new_item "><!--Bảng Sửa tin tức-->
+                            <label for="noteContent">Thêm ảnh</label>
+                            <% dataNews.forEach(function(dataOfNews){ %>
+                            <form  action="/admin/Edit_News/<%= dataOfNews._id %>/<%- a%>" method="post"class="formUpload">
+                              <div id="drag-drop-area"></div>
+                              <input type="hidden" name="files" value="<%= (dataOfNews.image_News || []).join(',') %> " >
+                              <script>
+                                const XHRUpload = Uppy.XHRUpload;
+                                let imgs = [];
+        
+                                var uppy = Uppy.Core()
+                                  .use(Uppy.Dashboard, {
+                                    inline: true,
+                                    target: '#drag-drop-area'
+                                  })
+                                  .use(XHRUpload, {
+                                    endpoint: '/uploadfile'
+                                  });
+        
+                                uppy.on('complete', (result) => {
+                                 
+                                  imgs = [
+                                    ...imgs, 
+                                    ...result.successful.map(item => item.response.body[0].filename)
+                                  ];
+        
+                                  document.getElementsByName('files')[0].value += ',' + imgs.toString(',');
+                                  for (let img of imgs){
+                                    let preview = document.createElement('div');
+                                    preview.innerHTML = `<img class="img-remove"src="/image_TinTuc/${img}" style="height: 130px;width:130px;">
+                                      <span class="remove11" img-name=${img}"><i id="remove_content_news1"class="far fa-times-circle "></i></span>
+                                      <input type="hidden"value="${img}" name="input_remove_img" >`;
+                                    preview.className = 'ShowImageUploaded col-2';
+                                    $('.ContainershowImgUploaded .row')[0].appendChild(preview);
+                                  }
+                                })
+                              </script>
+                              <hr>
+                              <p>Ảnh đã upload</p>
+                             <div class="ContainershowImgUploaded">
+                               <div class="row">
+                                <% if(dataOfNews.image_News==''){ %> <!--Nếu dữ liệu ảnh là rỗng-->
+                                  <% } else{  %><!--Nếu có  dữ liệu ảnh-->
+                                    <% for (let img of dataOfNews.image_News.map(s => s.trim()).filter(i => i)){ %>
+                                      <div class="ShowImageUploaded col-2">
+                                         <img class="img-remove"src="/image_TinTuc/<%= img %>" style="height:130px; width:130px;">
+                                        <span class="remove11" img-name="<%= img %>"><i id="remove_content_news1"class="far fa-times-circle "></i></span>
+                                     </div>   
+                                  <% } %>
+                                  <% } %>
+                               </div>
+                              </div>
+                          
+                            <div class="">
+                              <label for="noteTitle" name="title_
+                              news_intro">Tiêu đề giới thiệu tin tức</label>
+                              <input type="text" class="form-control" name="title_news_intro"  aria-describedby="" value="<%= dataOfNews.title_news_intro %> ">
+                              <label for="noteContent">Nội dung tin tức</label>
+                              <textarea name="editor1" cols="80" rows="10" id="editor1" ><%= dataOfNews.content_News_intro %></textarea> 
+                              <script>
+                                var a=CKEDITOR.replace( 'editor1',{ "extraPlugins" : 'imagebrowser',"imageBrowser_listUrl" : "/files"});
+                                a.on('change',function(){
+                                   document.getElementById('editor1').value = a.getData();
+                                   console.log(document.getElementById('editor1').value, a.getData());
+                                });
+                          </script> 
+                             
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block mt-3">Lưu lại</button>
+                           </form>
+                        <% })  %>      
+                  </div>
+                </div>
+              </main>
+              <footer class="py-4 bg-light mt-auto ml-4">
+                    <div class="container-fluid">
+                        <p>Được phát triển bởi D2HPhone team</p>
+                    </div>
+              </footer>
+        </div>
+    </body>
+</html>
+

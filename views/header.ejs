@@ -1,0 +1,61 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light" > <!--menu-->
+			<img src="/images/65680.png" width="40px"height="40px"></li>
+					<a class="navbar-brand" href="/">D2HPhone</a></li>
+			   
+			
+			<button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+				aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="collapsibleNavId">
+				<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+					<li class="nav-item active">
+						<a class="nav-link" href="/">Trang chủ <span class="sr-only">(current)</span></a>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sản phẩm</a>
+						<div class="dropdown-menu" aria-labelledby="dropdownId">
+							<%  for (var i =0 ; i < dataBrand.length; i++) { %> <!--duyệt mảng dataBrand-->
+							    <a class="dropdown-item" href="/brandandproduct/<%= dataBrand[i]._id %>/1"><%= dataBrand[i].category_name %></a>
+							<%  } %>
+						</div>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/noibat/1">Mới nhất</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/giamgia/1">Giảm giá</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/diemtin/1">Điểm tin</a>
+					</li>
+					<li>
+						<form class="form-inline my-2 my-lg-0">
+							<input class="form-control mr-sm-2 inputSearch" type="text" placeholder="Search...">
+							<button class="btn btn-outline-success my-2 my-sm-0 btn_submit" type="submit">Tìm kiếm</button>
+						</form>
+					</li>
+					
+				</ul>
+				<a href="/cart" class="mr-2"><i class="fas fa-shopping-cart"></i></a>
+					<!-- <a class="nav-link icon_user " href="#" id="userIcon" role="button" aria-haspopup="true" aria-expanded="false"> -->
+						<% if(login){ %>
+							<ul class="navbar-nav ml-auto ml-md-0">
+								<li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown"><span id="name_user"><%= user.Name %></span></a>
+									<div class="dropdown-menu dropdown-menu-right">
+										<a class="dropdown-item" href="/profile">Thông tin tài khoản</a>
+										<div class="dropdown-divider"></div>
+										<a class="dropdown-item" href="/users/logout">Logout</a>
+									</div>
+								</li>
+						</ul>
+						<% }else { %>
+							<a href="/users/login" class="account mr-2 d-lg-inline">Đăng nhập</a>
+						<% } %>
+						
+					</a>
+					
+					
+                </div>
+            </nav>

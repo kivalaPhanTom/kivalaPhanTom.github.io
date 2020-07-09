@@ -1,0 +1,9 @@
+.bolder{
+    font-weight: bolder;
+}
+.alert{
+    color: greenyellow;
+}
+.bg-lightgray{
+    background-color: lightgray !important;
+}

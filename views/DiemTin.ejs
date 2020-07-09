@@ -1,0 +1,71 @@
+
+<% include libaryHtml.ejs %>
+    <% include header.ejs %>
+<!--Giới thiệu-->
+<div class="News_hot text-center ">
+     <p class="Product_sell wow swing">Chuyện công nghệ</p>
+</div>
+<!--End Giới thiệu-->
+
+<!--Chi tiết-->
+<div class="container">
+    <div class="detail_news"><!--List sản phẩm-->
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="row">
+					<% for (var i = dataNews.length; i > 0; i--) { %>
+					<div class="chitiet_tin col-lg-4 col-md-4 col-sm-6 col-xs-12 mt-2"><!--item-->
+						<div class="">
+						    <a class="img_News" href="/detail/<%= dataNews[i-1]._id %> "><img src="/image_TinTuc/<%= dataNews[i-1].image_News[0] %>"class="img-fluid Anh_San_Pham" ></a>
+						  <p class="news_tech"><%= dataNews[i-1].title_news_intro %> </p>
+						  <p class="news_time"><i class="far fa-clock"></i> <%= moment(dataNews[i-1].time_news_intro).format(' h:mm:ss a, DD/MM/YYYY') %> </p>
+						</div>
+					</div>
+                    <% } %>	
+				</div>
+			</div>
+        </div>
+   </div>
+   <div class="empty_search diableDiv">
+
+</div>
+</div>
+
+<div class="PhanTrang">
+    <% if (pages > 0) { %>
+        <ul class="pagination text-center">
+            <% if (current == 1) { %>
+                <li class="disabled"><a>First</a></li>
+            <% } else { %>
+                <li><a href="/diemtin/1">First</a></li>
+            <% } %>
+            <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+            <% if (i !== 1) { %>
+                <li class="disabled"><a>...</a></li>
+            <% } %>
+            <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+                <% if (i == current) { %>
+                    <li class="active"><a><%= i %></a></li>
+                <% } else { %>
+                    <li><a href="/diemtin/<%= i %>"><%= i %></a></li>
+                <% } %>
+                <% if (i == Number(current) + 4 && i < pages) { %>
+                    <li class="disabled"><a>...</a></li>
+                <% } %>
+            <% } %>
+            <% if (current == pages) { %>
+                <li class="disabled"><a>Last</a></li>
+            <% } else { %>
+                <li><a href="/diemtin/<%= pages %>">Last</a></li>
+            <% } %>
+        </ul>
+    <% } %>
+</div>
+<!--End Chi tiết-->
+  <!--footer-->
+  <% include footer.ejs %> 
+<!--End footer-->
+
+    
+  </body>
+</html>

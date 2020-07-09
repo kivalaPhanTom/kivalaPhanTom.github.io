@@ -1,0 +1,90 @@
+<% include headerAdmin.ejs %> 
+            
+            <div id="layoutSidenav_content">
+                 <main>
+                    <div class="container mt-3 mb-5">
+                        <h3 class="text-center">Trang sửa hãng sản phẩm</h3>
+                                  <div class="addt_new_item "><!--Bảng Sửa Hãng sản phẩm-->
+                                    <h3>Sửa đổi </h3>
+                                    <label for="noteContent">Thêm ảnh</label>
+                                
+                                    <% data.forEach(function(dataOfBrand){ %>
+                                    <form  action="/admin/Edit_Brand/<%= dataOfBrand._id %>/<%- a%>" method="post">
+                                      <div id="drag-drop-area"></div>
+                                      <input type="hidden" name="filesBrand" value="<%=  (dataOfBrand.image || []).join(',') %> " >
+                                      <script>
+                                        const XHRUpload = Uppy.XHRUpload;
+                                        let imgs = [];
+                
+                                        var uppy = Uppy.Core()
+                                          .use(Uppy.Dashboard, {
+                                            inline: true,
+                                            target: '#drag-drop-area'
+                                          })
+                                          .use(XHRUpload, {
+                                            endpoint: '/uploadfileProduct'
+                                          });
+                
+                                        uppy.on('complete', (result) => {
+                                         
+                                          imgs = [
+                                            ...imgs, 
+                                            ...result.successful.map(item => item.response.body[0].filename)
+                                          ];
+                
+                                          document.getElementsByName('filesBrand')[0].value += ',' + imgs.toString(',');
+                
+                                          for (let img of imgs){
+                                            let preview = document.createElement('div');
+                                            preview.innerHTML = `<img class="img-remove"src="/image_Product/${img}" style="height: 130px;width:130px;">
+                                              <span class="remove2" img-name=${img}"><i id="remove_content_news1"class="far fa-times-circle "></i></span>
+                                              <input type="hidden"value="${img}" name="input_remove_img" >`;
+                                            preview.className = 'ShowImageUploaded col-2';
+                                            $('.ContainershowImgUploaded .row')[0].appendChild(preview);
+                                          }
+                                        })
+                                      </script>
+                                      <hr>
+                                      <p>Ảnh đã upload</p>
+                                     <div class="ContainershowImgUploaded">
+                                       <div class="row">
+                                        <% if( dataOfBrand.image==''){ %> <!--Nếu dữ liệu ảnh là rỗng-->
+                                        <% } else{%><!--Nếu có  dữ liệu ảnh-->
+                                            <% for (let img of dataOfBrand.image.map(s => s.trim()).filter(i => i)){ %>
+                                                <div class="ShowImageUploaded col-2">
+                                                <img class="img-remove"src="/image_Product/<%= img %>" style="height: 130px;width:130px;">
+                                                <span class="remove2" img-name="<%= img %>"><i id="remove_content_news1"class="far fa-times-circle "></i></span>
+                                              </div>   
+                                            <% } %>
+                                       <% } %>
+                                       </div>
+                                     </div>
+                                     </div>
+                                   
+                                       
+                                    <div class="form-group">
+                                    
+                                        <label for="noteTitle" name="title_
+                                        news_intro">Nhập tên hãng</label>
+                                        <input type="text" class="form-control" name="category_name" value="<%=  dataOfBrand.category_name %> ">
+                                        <label for="noteContent">Nhập chú thích</label>
+                                        <input type="text" class="form-control" name="description"value="<%=  dataOfBrand.description %> "> 
+                                    </div>
+                                  
+                                   
+                                    <button type="submit" class="btn btn-primary btn-block mt-3">Lưu lại</button>
+                                  </form>
+                                  <% })  %>    
+                    </div>
+                </main>
+                
+                <footer class="py-4 bg-light mt-auto ml-4">
+                    <div class="container-fluid">
+                        <p>Được phát triển bởi D2HPhone team</p>
+                    </div>
+                </footer>
+            </div>
+    </body>
+</html>
+<!doctype html>
+

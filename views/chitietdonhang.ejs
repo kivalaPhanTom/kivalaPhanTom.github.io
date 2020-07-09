@@ -1,0 +1,57 @@
+<% include libaryHtml.ejs %>
+  <% include header.ejs %>
+<div class="detail_cart">
+    <div class="container giohang">
+        <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 cart_leftt">
+                <div>
+                <h4>Trả tiền mặt khi giao hàng</h4>
+                <h3>Chi tiết sản phẩm</h3>
+                    <div class="donhang">
+                        <div class="row">
+                            <p class="col-6">Sản phẩm</p>
+                            <p class="col-6 text-right">Tổng Cộng</p>
+                        </div>
+                        <hr>
+                        <% order.items.forEach(function(item){ %>
+                        <div class="row">
+                            <p class="col-6"><%= item.item.product_name %> <strong>x<%= item.qty %></strong></p>
+                            <p class="col-6 text-right"><%= item.price %> VND</p>
+                        </div>
+                        <% }) %>
+                        <hr>
+                        <div class="row">
+                            <p class="col-6">Tổng cộng:</p><p class="text-right col-6 bolder"><%= order.totalPrice %></p>
+                            <p class="col-6">Phương thức thanh toán:</p><p class="text-right col-6 bolder">Trả tiền mặt khi nhận hàng</p>
+                            <p class="col-6">Tổng cộng:</p><p class="col-6 text-right bolder"><%= order.totalPrice %></p>
+                        </div>
+                        <hr>
+                    </div>
+                    <div class="thongtindiachi">
+                        <h3>Địa chỉ thanh toán</h3>
+                        <p><%= order.name_customer %></p>
+                        <p><%= order.address %></p>
+                        <p><%= order.phone %></p>
+                        <p><%= order.email %></p>
+                        <p>Ghi chú: <%= order.note %></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 cart_right">
+                <div>
+                    <div class="card bg-lightgray">
+                        <p class="bolder alert">Cám ơn bạn. Đơn hàng của bạn đã được nhận</p>
+                        <ul>
+                            <li><p>Mã đơn hàng: <strong><%= order._id %></strong></p></li>
+                            <li><p>Ngày tạo: <strong><%= order.create_day %></strong></p></li>
+                            <li><p>Email: <strong><%= order.email %></strong></p></li>
+                            <li><p>Tổng cộng: <strong><%= order.totalPrice %></strong></p></li>
+                            <li><p>Phương thức thanh toán: <strong>Trả tiền mặt khi nhận hàng</strong></p></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+<% include ./footer %>

@@ -1,0 +1,73 @@
+<% include libaryHtml.ejs %>
+  <% include header.ejs %>
+<div class="detail_cart">
+    <div class="container giohang">
+        <form method="POST", action="/chitietdonhang">
+        <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 cart_leftt">
+                <div class="choice">
+                    <p>
+                        <span class="ml-5">Thông tin thanh toán</span> 
+                    </p> 
+                </div>
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="form-group"><label>Họ tên</label><input class="form-control py-4" placeholder="Họ tên" name="Name" value="<%= user.Name %>" /></div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group"><label>Số điện thoại</label><input class="form-control py-4" placeholder="Số điện thoại" name="Phone" value="<%= user.Phone %>" required /></div>
+                        </div>
+                    </div>
+                    <div class="form-group">     
+                        <label>Địa chỉ</label>                                    
+                        <input class="form-control py-4" placeholder="Địa chỉ" name="Address" value="<%= user.Address %>" required />
+                    </div>
+                    <div class="form-group">     
+                        <label>Địa chỉ email</label>                                    
+                        <input class="form-control py-4" aria-describedby="emailHelp" placeholder="Địa chỉ email" name="Email" value="<%= user.Email %>" required/>
+                    </div>
+                    <div class="form-group">
+                        <label>Ghi chú về đơn hàng</label>
+                        <input class="form-control py-4" placeholder="Ví dụ: Thời gian giao hàng hay địa chỉ giao hàng tại địa điểm khác." name="Note" value="" />
+                    </div>                                   
+                </div>
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 cart_right">
+                
+                    <div class="info_cart">   
+                        <p class="info_cart_p">Đơn hàng của bạn</p>
+                        <hr>
+                        <div>
+                            <div class="row">
+                                <p class="col-6">Sản phẩm</p>
+                                <p class="col-6">Tổng cộng</p>
+                            </div>
+                            <hr>
+                            <% Items.forEach(function(item){ %>
+                            <div class="row">
+                                <div class="col-6">
+                                    <p class="size_info_total"><%= item.item.product_name %></p>
+                                    <p>x<%= item.qty %></p>
+                                </div>
+                                <p class="iff"><%= item.price %> VND</p>
+                            </div>
+                            <% }) %>
+                            <div class="infoOrder"> 
+                                <p class="size_info_total">Thành tiền: <span class="iff"><%= totalPrice %> VND</span></p>
+                                <p class="size_info">Phí giao hàng<span class="iff">30.000 VND</span></p>
+                                <hr>
+                                
+                                <p id="Sum_cost1">Tổng cộng <span class="iff">0 VND</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block btn_confirm_cart" id="btnComfirmOrder">Xác nhận thanh toán</button>
+                
+                
+                
+            
+            </div>
+          </div>
+        </form>
+    </div>
+  </div>
+<% include ./footer %>

@@ -1,0 +1,97 @@
+<% include headerAdmin.ejs %> 
+<div id="layoutSidenav_content">
+    <main>
+        <div class="container-fluid">
+            <h1 class="mt-4">Các hãng điện thoại</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                <li class="breadcrumb-item active">Danh sách hãng điện thoại</li>
+            </ol>
+            <a type="button" href="/admin/themhang" class="btn btn-primary btn-create">Thêm</a>
+
+            <div class="card mb-4">
+                
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Tên</th>
+                                    <th>Mô tả</th>
+                                    <th>Logo</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>Tên</th>
+                                    <th>Mô tả</th>
+                                    <th>Logo</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                <% listBrand.forEach(function(brand){ %>
+                                    <tr>
+                                        <td><%= brand.category_name %></td>
+                                        <td><%= brand.description %></td>
+                                        <td><image src="/image_Product/<%= brand.image[0] %>" style="height: 200px;width:200px;"></td>
+                                        <td>
+                                            <a class="btn btn btn-outline-primary" href="/admin/Edit_Brand/<%=brand._id %>/<%- current %> ">Sửa</a>
+                                            <a  onclick="return xoahaykhong('bạn có chắc chắn muốn xóa không ?');" class="btn btn-danger" type="reset" href="/xoaBrand/<%= brand._id %>/<%- current %>">Xóa</a>
+                                        </td> 
+                                    </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <div class="PhanTrang mt-3">
+        <% if (pages > 0) { %>
+            <ul class="pagination text-center">
+                <% if (current == 1) { %>
+                    <li class="disabled"><a>First</a></li>
+                <% } else { %>
+                    <li><a href="/admin/danhsachhang/1">First</a></li>
+                <% } %>
+                <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+                <% if (i !== 1) { %>
+                    <li class="disabled"><a>...</a></li>
+                <% } %>
+                <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+                    <% if (i == current) { %>
+                        <li class="active"><a><%= i %></a></li>
+                    <% } else { %>
+                        <li><a href="/admin/danhsachhang/<%= i %>"><%= i %></a></li>
+                    <% } %>
+                    <% if (i == Number(current) + 4 && i < pages) { %>
+                        <li class="disabled"><a>...</a></li>
+                    <% } %>
+                <% } %>
+                <% if (current == pages) { %>
+                    <li class="disabled"><a>Last</a></li>
+                <% } else { %>
+                    <li><a href="/admin/danhsachhang/<%= pages %>">Last</a></li>
+                <% } %>
+            </ul>
+        <% } %>
+    </div>
+    <footer class="py-4 bg-light mt-auto ml-4">
+        <div class="container-fluid">
+            <p>Được phát triển bởi D2HPhone team</p>
+        </div>
+    </footer>
+    <script type="text/javascript"> //hàm này có chức năng confirm thông tin bạn muốn xóa
+        function xoahaykhong(tinnhan){
+            if(window.confirm(tinnhan)==true){
+                return true;
+            }
+            return false;
+        }
+    </script>
+</div>
+</body>
+</html>

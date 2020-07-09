@@ -1,0 +1,98 @@
+<% include libaryHtml.ejs %>
+  <% include header.ejs %>
+<!--Giới thiệu-->
+<div class="NoiBat text-center">
+     <p class="Product_sell wow swing">Sản phẩm nổi bật</p>
+</div>
+<!--End Giới thiệu-->
+
+<!--Chi tiết-->
+<div class=" chi_tiet">
+    <div class="row">
+        <div class="list_brand col-lg-3">
+          <ul>
+            <li class="Category"><p >Category</p></li>
+            <li class="category_hover" data-class="all"><p >Tất cả <i class="fas fa-chevron-right"></i></p></li>
+            <% for (var i = 0; i < dataBrand.length; i++){ %> <!--in ra tên các hãng sản phẩm-->
+                <li class="category_hover" data-class="<%= dataBrand[i]._id %>"><p ><%= dataBrand[i].category_name %><i class="fas fa-chevron-right"></i></p></li>
+            <% } %>
+        </ul>
+        </div>
+        <div class="list_device col-lg-9">
+          <div class="row">
+            <%  for (var i = dataProductHot.length; i > 0; i--) { %> <!--duyệt mảng product-->
+                <% if(dataProductHot[i-1].Top == 'Có'){ %> <!--Kiểm tra xem sản phẩm có hot hay không-->
+                   
+                                  <div class="detail_Sanpham col-lg-4 col-md-4 col-sm-6 col-xs-12 mt-2 <%= dataProductHot[i-1].id_category %>" ><!--item-->
+                                    <div class="">
+                                    <a class="a_anh"href="/detailProduct/<%= dataProductHot[i-1]._id %>"><img src="/image_Product/<%= dataProductHot[i-1].image[0]%>"class="img-fluid Anh_San_Pham" ></a>
+                                    <div class="div_name_product"> <p class="name_Product"><%= dataProductHot[i-1].product_name %></p></div>
+                                    <div class="row index">
+                                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9  container_Add_name">
+                                        
+
+                                          <% if(dataProductHot[i-1].promotion_price == ''){ %>
+                                            <p class="cost_Product"><i class="fas fa-dollar-sign"></i> <span><%= dataProductHot[i-1].price %> VNĐ</span></p>
+                                          <% } else{ %>
+                                            <p class="cost_Product"><i class="fas fa-dollar-sign"></i> <span><%= dataProductHot[i-1].promotion_price %> VNĐ</span></p>
+                                            <div class="giagoc">
+                                              <p class="p_giagoc"><%= dataProductHot[i-1].price %> VNĐ</p>
+                                              <div class="div_giagoc" ></div>
+                                          </div>
+                                          <% }  %>
+                                 
+                                        </div>
+                                        <div class="Add_to_cart col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                          <a href="GioHang.html"><i class="fas fa-cart-plus"></i></a>
+                                      </div>
+                                    </div>
+                                  </div>
+                       </div>
+                <% } %>
+            <% } %>	
+          </div>
+      </div>   
+      <div class="empty_search diableDiv">
+
+      </div>
+    </div>
+</div>
+<div class="PhanTrang">
+  <% if (pages > 0) { %>
+      <ul class="pagination text-center">
+          <% if (current == 1) { %>
+              <li class="disabled"><a>First</a></li>
+          <% } else { %>
+              <li><a href="/noibat/1">First</a></li>
+          <% } %>
+          <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+          <% if (i !== 1) { %>
+              <li class="disabled"><a>...</a></li>
+          <% } %>
+          <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+              <% if (i == current) { %>
+                  <li class="active"><a><%= i %></a></li>
+              <% } else { %>
+                  <li><a href="/noibat/<%= i %>"><%= i %></a></li>
+              <% } %>
+              <% if (i == Number(current) + 4 && i < pages) { %>
+                  <li class="disabled"><a>...</a></li>
+              <% } %>
+          <% } %>
+          <% if (current == pages) { %>
+              <li class="disabled"><a>Last</a></li>
+          <% } else { %>
+              <li><a href="/noibat/<%= pages %>">Last</a></li>
+          <% } %>
+      </ul>
+  <% } %>
+</div>
+<!--End Chi tiết-->
+
+
+<!--footer-->
+  <% include footer.ejs %> 
+<!--End footer-->
+
+  </body>
+</html>

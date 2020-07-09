@@ -1,0 +1,88 @@
+<% include headerAdmin.ejs %> 
+            <div id="layoutSidenav_content">
+                 <main>
+                    <div class="container mt-3">
+                        <h3 class="text-center">Bảng tin</h3>
+                        <div class="row">
+                            
+                            <div class="col-12">
+                                <a type="button" href="/admin/add_News" class="btn btn-primary btn-create mb-2">Thêm tin tức</a>
+                                  <div id="News_item" role="tablist" aria-multiselectable="true"> <!--gõ tắt: b4-collapse-arrcodion-->
+                                   
+                                    <% data.forEach(function(motphantu) { %>  
+                                       <div class="card">
+                                            <div class="card-header" role="tab" id="note1">
+                                                 <h5 class="mb-0">
+                                                  <div class="btn-group float-left">
+                                                      <a data-toggle="collapse" data-parent=""  aria-expanded="true" aria-controls="">
+                                                        <%= motphantu.title_news_intro %> 
+                                                       </a>
+                                                       <p class="ml-3 time_news_intro"><i class="far fa-clock"></i>    <%= moment(motphantu.time_news_intro).format(' h:mm:ss a, DD/MM/YYYY') %> </p>
+                                                      </div>
+                                                      <div class="btn-group float-right">
+                                                      
+                                                        <a  href="/admin/Edit_News/<%= motphantu._id %>/<%- current %> "><i class="fa fa-edit" aria-hidden="true"></i> </a>/
+                                                        <a onclick="return xoahaykhong('bạn có chắc chắn muốn xóa không ?');" href="/admin/xoa/<%= motphantu._id %>/<%- current %>">
+                                                        <i class="fa fa-remove" aria-hidden="true"></i></a>   
+                                                      </div>
+                                                   </h5>       
+                                            </div>
+                                           
+                                        </div> 
+                                        <%   }) %>
+                                    </div>
+                              </div>
+                             
+                          </div>
+                    </div>
+                   </main>
+                
+        <div class="PhanTrang mt-3">
+            <% if (pages > 0) { %>
+                <ul class="pagination text-center">
+                    <% if (current == 1) { %>
+                        <li class="disabled"><a>First</a></li>
+                    <% } else { %>
+                        <li><a href="/admin/adminNews/1">First</a></li>
+                    <% } %>
+                    <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+                    <% if (i !== 1) { %>
+                        <li class="disabled"><a>...</a></li>
+                    <% } %>
+                    <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+                        <% if (i == current) { %>
+                            <li class="active"><a><%= i %></a></li>
+                        <% } else { %>
+                            <li><a href="/admin/adminNews/<%= i %>"><%= i %></a></li>
+                        <% } %>
+                        <% if (i == Number(current) + 4 && i < pages) { %>
+                            <li class="disabled"><a>...</a></li>
+                        <% } %>
+                    <% } %>
+                    <% if (current == pages) { %>
+                        <li class="disabled"><a>Last</a></li>
+                    <% } else { %>
+                        <li><a href="/admin/adminNews/<%= pages %>">Last</a></li>
+                    <% } %>
+                </ul>
+            <% } %>
+        </div>
+                <footer class="py-4 bg-light mt-auto ml-4">
+                    <div class="container-fluid">
+                        <p>Được phát triển bởi D2HPhone team</p>
+                    </div>
+                </footer>
+            </div>
+        </div>
+
+
+        <script type="text/javascript"> //hàm này có chức năng confirm thông tin bạn muốn xóa
+            function xoahaykhong(tinnhan){
+                if(window.confirm(tinnhan)==true){
+                    return true;
+                }
+                return false;
+            }
+        </script>
+    </body>
+</html>

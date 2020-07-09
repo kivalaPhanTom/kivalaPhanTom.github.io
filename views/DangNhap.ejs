@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	<script src="https://kit.fontawesome.com/31b5a77c7b.js" crossorigin="anonymous"></script> <!-- Nhúng font-Awesome -->
+
+	<!--Link CSS-->
+	<link rel="stylesheet" href="../stylesheets/index.css">
+
+	<!--Link JS-->
+	<script type="text/javascript" src="../javascripts/index.js"></script>
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+
+</head>
+  <body>
+	<div class="container dang_nhap">
+   
+			<div class="HinhVuong1 wow fadeInUp">
+
+            </div>
+            <div class="HinhVuong2 wow fadeInDown">
+    
+            </div>
+			<div class="social">
+            
+            </div>
+			<form action="/users/login" method="post" class="beta-form-checkout wow zoomIn">
+				
+				<div class="formdangnhap">
+					
+					<div class="formdangnhap1">
+						<h4 class="text-center h4DangNhap ">Đăng nhập</h4>
+						<div class="space20">&nbsp;</div>
+						<% include ./partials/messages %>
+						<button class="fb white btn btn-dark"><i class="fab fa-facebook-f white"></i> 
+                			<a href="/auth/fb">Sign in with Facebook</a>
+						</button>
+						<button class="gg white btn btn-dark"><i class="fab fa-google-plus-g white"></i>
+							<a href="/auth/gg">Sign in with Google+</a>
+						</button>
+						
+						<div class="form-block">
+							<label for="email"class="email">Email</label>
+							<input type="email" id="email" name="Email" required>
+						</div>
+						<div class="form-block form_pass">
+							<label for="phone"class="password">Mật khẩu</label>
+							<input type="password" id="phone" name="Password" required>
+                        </div>	
+                        <a class="forgot_password"href=""><p>Quên mật khẩu ?</p><button class="btn btn-primary" type="submit ">Đăng nhập</button></a>
+						<ul class="back_point">
+                            <li class="one"><a href="../"class="quaytrove"><p><i class="fas fa-backward"></i>  Trở về trang chủ</p></a></li>
+                            <li class="one"><a href="register"class="quaytrove"><p>Chưa có tài khoản? <i class="fas fa-forward"></i></p></a></li>
+                        </ul>
+					</div>
+					<div class="col-sm-3"></div>
+				</div>
+			</form>
+        
+      
+	</div> 
+  </body>
+</html>

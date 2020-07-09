@@ -1,0 +1,5 @@
+npm install mongoose
+npm install moment-timezone
+npm install --save mongoose express body-parser ejs faker
+npm install ckeditor --save
+bower install ckeditor --save

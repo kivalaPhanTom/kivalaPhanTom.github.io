@@ -1,0 +1,108 @@
+<% include libaryHtml.ejs %>
+  <% include header.ejs %>
+<!--Chi tiết-->
+<div class="NenXam">
+    <div class="container chitiet">
+        <div class="row">
+            <div class=" col-lg-6 col-md-6 col-sm-12 col-xs-12" >            
+                <div class="clearfix" style="max-width:474px;">
+                    <p>Tên sản phẩm</p>
+                    <ul id="image-gallery" class="gallery list-unstyled cS-hidden">
+                      
+                        <% for (var i=0; i < data.length; i++){ %> <!-- duyệt mảng product-->
+                            <% for (let img of data[i].image.map(s => s.trim()).filter(i => i)){ %><!-- duyệt mảng product ảnh để in ra-->
+                                <li class="thumb_img"data-thumb="/image_Product/<%= img %>"> 
+                                    <img src="/image_Product/<%= img %>" class="img-fluid thumnailImg" >
+                                   
+                                </li> 
+                            <% } %>
+                       <% } %>
+                    </ul>
+                    <div class="mt-3 add_buy text-center">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 detail_add_to_cart">
+                                <button class="add_cart">Thêm vào giỏ hàng</button>
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 detail_buy_now">
+                                <button class="buy_now">Mua ngay</button>
+                            </div>
+                            
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+          
+            <div class="Thong_So col-lg-6 col-md-6 col-sm-12 col-xs-12">
+               <div class="info_device">
+                   <p class=''>Thông số kỹ thuật</p>
+                   <ul class="ul_info_device">
+                  
+                    <% for (var i=0; i < data.length; i++){ %> 
+                        
+                        <% for (var j = 0; j < dataBrand.length; j++){ %> <!--Kiểm tra sản phẩm thuộc hãng nào-->
+                            <% if ( data[i].id_category ==  dataBrand[j]._id) { %>
+                                <li><label>Hãng sản xuất:</label> <span><%= dataBrand[j].category_name %></span></li>
+                               
+                            <% } %>
+                        <% } %> 
+                       
+                    
+                        <% if(data[i].promotion_price === '' ) {%> <!--Check xem sản phẩm có giá khuyến mãi hay không, nếu có thì in ra, ko có thì in giá gốc-->
+                               
+                            <li><label>Giá:</label> <span><%= data[i].price%> VNĐ</span></li>
+                        <% }else { %>
+                            <li><label>Giá Khuyến mãi:</label> <span><%= data[i].promotion_price%> VNĐ</span></li>
+                        <%  } %>
+                        <li><label>Màn hình:</label> <span><%= data[i].moniter%></span></li>
+                        <li><label>Camera trước:</label> <span><%=data[i].camera_truoc%></span></li>
+                        <li><label>Camera sau:</label> <span><%= data[i].camera_sau%></span></li>
+                        <li><label>RAM:</label> <span><%= data[i].ram%></span></li>
+                        <li><label>Bộ nhớ trong:</label> <span><%= data[i].memory%></span></li>
+                        <li><label>CPU:</label> <span><%= data[i].cpu  %></span></li>
+                        <li><label>GPU:</label> <span><%= data[i].gpu %></span></li>
+                        <li><label>Dung lượng pin:</label> <span><%= data[i].pin %></span></li>
+                        <li><label>Hệ điều hành:</label> <span><%= data[i].operation%></span></li>
+                        <li><label>Thẻ SIM:</label> <span><%= data[i].sim %></span></li>
+                        <li><label>Thẻ nhớ:</label> <span><%= data[i].micro_sd %></span></li>
+                        <li><label>Xuất xứ:</label> <span><%= data[i].origin %></span></li>
+                        <li><label>Năm sản xuất:</label> <span><%= data[i].year %></span></li>
+                        <li><label>Số lượng còn lại:</label> <span><%= data[i].quantity %></span></li>
+                       
+                    
+                    <% } %>
+                   </ul>
+               </div>
+            </div>
+            
+    
+        </div>
+        <div class="comment mt-5"> <!--Khối comment-->
+            <form  action=""  method="POST">
+            <div class="">
+                <p class="name_author"><strong>Tên người dùng bình luận </strong></p>
+                <textarea name="" id="textArea_comment" style="width: 100%; " placeholder="  Bắt đầu thảo luận..."></textarea>
+                <button style= "float:right; margin-bottom: 10px;"type="button" class="btn btn-secondary btn_binhluan">Bình luận</button>
+                <hr style= "clear:both; background-color:#fd7e14ad;">
+            </div>
+            <div class="">
+                <div class="">
+                    <p><Strong  class="name_author">Tên người dùng đã comment</Strong> <label class="time_comment" for="">Thời gian comment</label></p>
+                     <p class="content_comment">Nội dung comment</p>
+                      <p style="font-size: 16px;margin-left: 20px;"><a>Sửa</a> | <a>Xóa</a> | <a>lượt trả lời</a></p>
+                      <hr>
+               </div>
+
+            </div>
+          </form>
+     </div><!--End Khối comment-->
+    </div>
+</div>
+
+<!--End Chi tiết-->
+  <!--footer-->
+  <% include footer.ejs %> 
+  <!--End footer-->
+
+  </body>
+</html>

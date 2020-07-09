@@ -1,0 +1,46 @@
+
+<% include libaryHtml.ejs %>
+  <% include header.ejs %>
+<!--Chi tiết-->
+<div class="NenXam">
+    <div class="container chitiet">
+        <div class="row">
+         
+          <% dataNews.forEach(function(dataOfNewsPage){ %> 
+            <%- dataOfNewsPage.content_News_intro %>
+         <% })  %>    
+         <div class="empty_search diableDiv">
+
+        </div>
+
+    
+        </div>
+        <div class="comment mt-5"> <!--Khối comment-->
+          <form  action=""  method="POST">
+          <div class="">
+              <p class="name_author"><strong>Tên người dùng bình luận </strong></p>
+              <textarea name="" id="textArea_comment" style="width: 100%; " placeholder="  Bắt đầu thảo luận..."></textarea>
+              <button style= "float:right; margin-bottom: 10px;"type="button" class="btn btn-secondary btn_binhluan">Bình luận</button>
+              <hr style= "clear:both; background-color:#fd7e14ad;">
+          </div>
+          <div class="">
+              <div class="">
+                  <p><Strong  class="name_author">Tên người dùng đã comment</Strong> <label class="time_comment" for="">Thời gian comment</label></p>
+                   <p class="content_comment">Nội dung comment</p>
+                    <p style="font-size: 16px;margin-left: 20px;"><a>Sửa</a> | <a>Xóa</a> | <a>lượt trả lời</a></p>
+                    <hr>
+             </div>
+
+          </div>
+        </form>
+   </div><!--End Khối comment-->
+    </div>
+</div>
+
+<!--End Chi tiết-->
+<!--footer-->
+  <% include footer.ejs %> 
+<!--End footer-->
+
+  </body>
+</html>

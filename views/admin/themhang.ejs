@@ -1,0 +1,49 @@
+<% include headerAdmin.ejs %> 
+<div id="layoutSidenav_content">
+    <div class = "form-themhang container-fluid">
+        <h1>Thêm hãng</h1>
+        <form action="/UpLogoBrand" method="post" class="formUpload">
+
+                <label>Nhập tên hãng</label>
+                <input type="text" class="form-control" name="category_name" >
+                 <br>
+                 <label>Nhập chú thích</label>
+                 <input type="text" class="form-control" name="description">
+                 <label>Logo</label>
+                 <div id="drag-drop-area"></div>
+                 <input type="hidden" name="filesBrand" id="filesBrand" class="filesBrand">
+                 <div class="form_img"></div>
+                 <script>
+                     const XHRUpload = Uppy.XHRUpload;// Định nghĩa biến cho plugin  XHRUpload của uppy, cho phép tải ảnh lên
+                     let imgs = [];
+     
+                     var uppy = Uppy.Core()
+                     .use(Uppy.Dashboard, { /* darhboard giao diện*/
+                         inline: true,
+                         target: '#drag-drop-area'
+                     })
+                     .use(XHRUpload, {
+                         endpoint: '/uploadfileProduct' //Đường dẫn tới folder chứa ảnh sau khi upload
+                     });
+     
+                     uppy.on('complete', (result) => { //sau khi upxong 
+                     imgs = [
+                         ...imgs, 
+                         ...result.successful.map(item => item.response.body[0].filename)
+                     ];
+                     document.getElementsByName('filesBrand')[0].value  += ',' + imgs.toString(',');
+                     })
+                     
+                 </script>
+           
+            <button type="submit" class="btn btn-primary btn-block mt-3">Lưu lại</button>
+          </form>
+    </div>
+    <footer class="py-4 bg-light mt-auto ml-4">
+        <div class="container-fluid">
+            <p>Được phát triển bởi D2HPhone team</p>
+        </div>
+    </footer>
+</div>
+</body>
+</html>

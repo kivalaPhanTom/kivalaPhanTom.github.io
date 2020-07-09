@@ -1,0 +1,254 @@
+
+<% include libaryHtml.ejs %>
+    
+<div class="part1">
+	<% include header.ejs %>
+	
+<div class="special container "><!--phần chứa slide và chữ wellcome---->
+	<div class="row">
+					<!--Begin Slide-->
+<div class="container text-center mt-3 col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
+	<!--mt-3 để cách ra 1 đoạn-->
+	<h3 class="Top">Sản phẩm nổi bật </h3>
+	<div class="item ">
+		<% if (dataProduct.length <6) { %>
+		<ul id="content-slider" class="content-slider ">
+		
+				<%  for (var i = dataProduct.length; i > 0; i--) { %> <!--duyệt mảng product-->
+					<% if(dataProduct[i-1].Top == 'Có'){ %> <!--Kiểm tra xem sản phẩm có hot hay không-->
+						<li><a href="">
+							<div class="thumbnail ">
+								<a href="/detailProduct/<%= dataProduct[i-1]._id %>"><img src="/image_Product/<%= dataProduct[i-1].image[0]%>"class="img_slide" alt="" /></a>
+								<div class="caption">
+									<h4 th:text="${game.title}" >
+									<p th:text="${game.shortDescription}" >
+									<a href="/detailProduct/<%= dataProduct[i-1]._id %>" class="btn btn-info btn-xs btn-block infoitem" role="button"><%=  dataProduct[i-1].product_name %></a>
+	
+								</div>
+							</div>
+						</La>
+					</li>			
+					<% } %>
+				<% } %>	
+				<% } else { %>
+					<%  for (var i = dataProduct.length; i > dataProduct.length-6; i--) { %> <!--duyệt mảng product-->
+						<% if(dataProduct[i-1].Top == 'Có'){ %> <!--Kiểm tra xem sản phẩm có hot hay không-->
+							<li><a href="">
+								<div class="thumbnail ">
+									<a href="/detailProduct/<%= dataProduct[i-1]._id %>"><img src="/image_Product/<%= dataProduct[i-1].image[0]%>"class="img_slide" alt="" /></a>
+									<div class="caption">
+										<h4 th:text="${game.title}" >
+										<p th:text="${game.shortDescription}" >
+										<a href="/detailProduct/<%= dataProduct[i-1]._id %>" class="btn btn-info btn-xs btn-block infoitem" role="button"><%=  dataProduct[i-1].product_name %></a>
+		
+									</div>
+								</div>
+							</a>
+						</li>			
+						<% } %>
+					<% } %>	
+		</ul>
+		<% } %>
+	</div>
+</div>
+<!--End Slide-->
+<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 chaomung">
+	<div class="wellcome1">
+		<h3 class="wellcome wow  wobble" data-wow-delay="0.7s">Wellcome !!!</h3>
+	</div>
+</div>
+	</div>
+
+</div><!--End phần chứa slide và chữ wellcome---->
+</div> <!--End part 1-->
+
+
+
+
+<!--Part2-->
+<!-- Danh sách sản phẩm-->
+<div class=" container part2 mt-3"> <!--Tiêu đề-->
+<div class="tieude">
+  <p class="product arrow_box wow slideInRight" data-wow-delay="0.1s">Sản phẩm</p>
+</div>
+<div class="detail"><!--List sản phẩm-->
+  <div class="row">
+	  <div class="col-lg-12">
+		  <div class="row">
+			<% if (dataProduct.length <6) { %> <!--Trường hợp số phần tử trong mảng dataProduct  nhỏ hơn 6, vẫn cho phép in ra phần tử-->
+				<%  for (var i =dataProduct.length; i > 0; i--) { %> <!--duyệt mảng product-->
+					<div class="detail_Sanpham col-lg-4 col-md-4 col-sm-6 col-xs-12 mt-2 <%= dataProduct[i-1].id_category %>" ><!--item-->
+						<div class="">
+								<a class="a_anh"href="/detailProduct/<%= dataProduct[i-1]._id %>"><img src="/image_Product/<%= dataProduct[i-1].image[0]%>"class="img-fluid Anh_San_Pham" ></a>
+								<div class="div_name_product"><p class="name_Product"><%= dataProduct[i-1].product_name %></p></div>
+								<div class="row index">
+									<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 container_Add_name">
+										
+											<% if(dataProduct[i-1].promotion_price == ''){ %>
+												<p class="cost_Product"><i class="fas fa-dollar-sign"></i> <span><%= dataProduct[i-1].price %> VNĐ</span></p>
+											<% } else{ %>
+												<p class="cost_Product"><i class="fas fa-dollar-sign"></i> <span><%= dataProduct[i-1].promotion_price %> VNĐ</span></p>
+												<div class="giagoc">
+												  <p class="p_giagoc"><%= dataProduct[i-1].price %> VNĐ</p>
+												  <div class="div_giagoc" ></div>
+											  </div>
+											<% }  %>  
+										</div>
+										<div class="Add_to_cart col-lg-3 col-md-3 col-sm-3 col-xs-3">
+											  <a ><i class="fas fa-cart-plus"></i></a>
+										</div>
+									</div>
+								</div>
+							</div>
+				   <% } %>
+				<% } else { %><!--Trường hợp số phần tử trong mảng  dataProduct lớn hơn hoặc bằng 6, thì chỉ có phép 6 phần tử được in ra-->
+					<%  for (var i =dataProduct.length; i > dataProduct.length-6; i--) { %> <!--duyệt mảng product-->
+						<div class="detail_Sanpham col-lg-4 col-md-4 col-sm-6 col-xs-12 mt-2 <%= dataProduct[i-1].id_category %>" ><!--item-->
+							<div class="">
+									<a class="a_anh"href="/detailProduct/<%= dataProduct[i-1]._id %>"><img src="/image_Product/<%= dataProduct[i-1].image[0]%>"class="img-fluid Anh_San_Pham" ></a>
+									 <div class="div_name_product">	<p class="name_Product"><%= dataProduct[i-1].product_name %></p></div>
+									<div class="row index">
+										<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 container_Add_name">
+										
+												<% if(dataProduct[i-1].promotion_price == ''){ %>
+													<p class="cost_Product"><i class="fas fa-dollar-sign"></i> <span><%= dataProduct[i-1].price %> VNĐ</span></p>
+												<% } else{ %>
+													<p class="cost_Product"><i class="fas fa-dollar-sign"></i> <span><%= dataProduct[i-1].promotion_price %> VNĐ</span></p>
+													<div class="giagoc">
+													  <p class="p_giagoc"><%= dataProduct[i-1].price %> VNĐ</p>
+													  <div class="div_giagoc" ></div>
+												  </div>
+												<% }  %>  
+											</div>
+											<div class="Add_to_cart col-lg-3 col-md-3 col-sm-3 col-xs-3">
+												  <a href=""><i class="fas fa-cart-plus"></i></a>
+											</div>
+										</div>
+									</div>
+								</div>
+					   <% } %>	  
+				<% } %>
+			
+		  </div>
+	  </div>
+  </div>
+</div>
+</div>
+<!--End phần Danh sách sản phẩm-->
+
+<!--Phần Giảm Giá-->
+<div class=" container part2 mt-3"> <!--Tiêu đề-->
+<div class="tieude2">
+	<p class="GiamGia arrow_box1 wow slideInLeft" data-wow-delay="0.1s">Giảm giá</p>
+</div>
+<div class="detail"><!--List sản phẩm-->
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="row">
+
+				<% if (dataProduct.length <6) { %> <!--Trường hợp số phần tử trong mảng dataProduct  nhỏ hơn 6, vẫn cho phép in ra phần tử-->
+					<%  for (var i = dataProduct.length; i > 0; i--) { %> <!--duyệt mảng product-->
+						<% if( dataProduct[i-1].promotion_price !== ''){ %> <!--Lọc ra sản phẩm có giảm giá-->
+								<div class="detail_Sanpham col-lg-4 col-md-4 col-sm-6 col-xs-12 mt-2 <%=  dataProduct[i-1].id_category %>" ><!--item-->
+									<div class="">
+										<a class="a_anh" href="/detailGiamGia/<%=  dataProduct[i-1]._id %>"><img src="/image_Product/<%=  dataProduct[i-1].image[0]%>"class="img-fluid Anh_San_Pham" ></a>
+										<div class="div_name_product">	<p class="name_Product"><%=  dataProduct[i-1].product_name %></p>	</div>
+										<div class="row index">
+											<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 container_Add_name">
+											
+												<p class="cost_Product"><i class="fas fa-dollar-sign"></i> <span><%=  dataProduct[i-1].promotion_price %> VNĐ</span></p>
+												<div class="giagoc">
+													<p class="p_giagoc"><%=  dataProduct[i-1].price %> VNĐ</p>
+													<div class="div_giagoc" ></div>
+												</div>	
+											</div>
+											<div class="Add_to_cart col-lg-3 col-md-3 col-sm-3 col-xs-3">
+													<a href=""><i class="fas fa-cart-plus"></i></a>
+											</div>
+										</div>
+									</div>
+								</div>
+							 <% }  %>   
+						<% } %>	
+				
+				<% } else { %><!--Trường hợp số phần tử trong mảng  dataProduct lớn hơn hoặc bằng 6, thì chỉ có phép 6 phần tử được in ra-->
+					<%  for (var i = dataProduct.length; i > dataProduct.length-6; i--) { %> <!--duyệt mảng product-->
+						<% if( dataProduct[i-1].promotion_price !== ''){ %> <!--Lọc ra sản phẩm có giảm giá-->
+								<div class="detail_Sanpham col-lg-4 col-md-4 col-sm-6 col-xs-12 mt-2 <%=  dataProduct[i-1].id_category %>" ><!--item-->
+									<div class="">
+										<a class="a_anh" href="/detailGiamGia/<%=  dataProduct[i-1]._id %>"><img src="/image_Product/<%=  dataProduct[i-1].image[0]%>"class="img-fluid Anh_San_Pham" ></a>
+										<div class="div_name_product"><p class="name_Product"><%=  dataProduct[i-1].product_name %></p></div>
+										<div class="row index">
+											<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 container_Add_name">
+													
+												<p class="cost_Product"><i class="fas fa-dollar-sign"></i> <span><%=  dataProduct[i-1].promotion_price %> VNĐ</span></p>
+												<div class="giagoc">
+													<p class="p_giagoc"><%=  dataProduct[i-1].price %> VNĐ</p>
+													<div class="div_giagoc" ></div>
+												</div>	
+											</div>
+											<div class="Add_to_cart col-lg-3 col-md-3 col-sm-3 col-xs-3">
+													<a href=""><i class="fas fa-cart-plus"></i></a>
+											</div>
+										</div>
+									</div>
+								</div>
+							 <% }  %>   
+					  <% } %>	
+				<% } %>
+			
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+<!--End Phần Giảm Giá-->
+
+<!--Phần Điểm Tin-->
+<div class=" container part2 mt-3"> <!--Tiêu đề-->
+<div class="tieude">
+	<p class="product arrow_box3 wow slideInRight" data-wow-delay="0.1s">Điểm tin</p>
+</div>
+<div class="detail_news"><!--List tin tức-->
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="row">
+
+				<% if (dataNews.length <6) { %> <!--Trường hợp số phần tử trong mảng dataNews nhỏ hơn 6, vẫn cho phép in ra phần tử-->
+					<% for (var i = dataNews.length; i > 0; i--) { %> 
+						<div class="chitiet_tin col-lg-4 col-md-4 col-sm-4 col-xs-4 mt-2"><!--item-->
+							<div class="">
+							  <a href="/detail/<%= dataNews[i-1]._id %> "><img src="/image_TinTuc/<%= dataNews[i-1].image_News[0] %>"class="img-fluid Anh_San_Pham" ></a>
+							  <p class="news_tech"><%= dataNews[i-1].title_news_intro %> </p>
+							  <p class="news_time"><i class="far fa-clock"></i> <%= moment(dataNews[i-1].time_news_intro).format(' h:mm:ss a, DD/MM/YYYY') %> </p>
+							</div>
+						</div>
+					<% } %>	
+
+				<% } else { %>	
+					<% for (var i = dataNews.length; i > dataNews.length-6; i--) { %> <!--Trường hợp số phần tử trong mảng dataNews lớn hơn hoặc bằng 6, thì chỉ có phép 6 phần tử được in ra-->
+						<div class="chitiet_tin col-lg-4 col-md-4 col-sm-4 col-xs-4 mt-2"><!--item-->
+							<div class="">
+							  <a href="/detail/<%= dataNews[i-1]._id %> "><img src="/image_TinTuc/<%= dataNews[i-1].image_News[0] %>"class="img-fluid Anh_San_Pham" ></a>
+							  <p class="news_tech"><%= dataNews[i-1].title_news_intro %> </p>
+							  <p class="news_time"><i class="far fa-clock"></i> <%= moment(dataNews[i-1].time_news_intro).format(' h:mm:ss a, DD/MM/YYYY') %> </p>
+							</div>
+						</div>
+					<% } %>	
+				<% } %>	
+				
+			</div>
+		</div>
+
+	</div>
+</div>
+</div>
+<!--End Phần Điểm Tin-->
+<div class="empty_search diableDiv">
+
+</div>
+<!--End Phần Điểm Tin-->
+<!--End Part2-->
+<% include footer.ejs %>
+</body>
+</html>

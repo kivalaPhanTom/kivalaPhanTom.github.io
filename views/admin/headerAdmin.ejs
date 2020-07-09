@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"http-equiv="Content-Type" content="text/html;" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Dashboard - SB Admin</title>
+          <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link href="/admin/styles.css" rel="stylesheet" />
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <!--Link CSS-->
+        <link rel="stylesheet" href="/stylesheets/adminNews.css">
+        <!--Uppy CSS (thư viện Uppload ảnh)-->
+        <link href="https://transloadit.edgly.net/releases/uppy/v1.16.0/uppy.min.css" rel="stylesheet">
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="https://kit.fontawesome.com/31b5a77c7b.js" crossorigin="anonymous"></script> <!-- Nhúng font-Awesome -->
+        
+    
+        <!--Link JS-->
+        <script type="text/javascript" src="/javascripts/adminNews.js"></script>
+        <!--Uppy JS (thư viện Uppload ảnh)-->
+        <script src="https://transloadit.edgly.net/releases/uppy/v1.16.0/uppy.min.js"></script>
+        <script src="/admin/scripts.js"></script>
+        <script src="/ckeditor/ckeditor.js"></script><!--CKeditor-->
+        <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300&display=swap" rel="stylesheet">
+    
+    </head>
+    <body class="sb-nav-fixed">
+        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+            <a class="navbar-brand" href="/admin">Admin</a><button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button
+            ><!-- Navbar Search-->
+            <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+                <div class="input-group">
+                    <input class="form-control" type="text" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" />
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="button"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+            </form>
+            <!-- Navbar-->
+            <ul class="navbar-nav ml-auto ml-md-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                        <a class="dropdown-item" href="#">Settings</a><a class="dropdown-item" href="#">Activity Log</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="login.html">Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        <div id="layoutSidenav">
+            <div id="layoutSidenav_nav">
+                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                    <div class="sb-sidenav-menu">
+                        <div class="nav">
+                            <div class="sb-sidenav-menu-heading">Core</div>
+                            <a class="nav-link" href="index.html"
+                                ><div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                Dashboard</a
+                            >
+                            <div class="sb-sidenav-menu-heading">Quản lý sản phẩm</div>
+                            <!--Hãng-->
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts"
+                                ><div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                Hãng
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div
+                            ></a>
+                            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="/admin/danhsachhang/1">Danh sách hãng</a>
+                                    <a class="nav-link" href="/admin/themhang">Thêm hãng</a>
+                               </nav>
+                            </div>
+
+                             <!--Sản phẩm-->
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false" aria-controls=" collapsePages"
+                                ><div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                                Sản phẩm
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div
+                            ></a>
+                            <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                                    <a class="nav-link collapsed" href="/admin/danhsachsanpham/1" aria-expanded="false" aria-controls="pagesCollapseAuth"
+                                        >Danh sách sản phẩm
+                                    </a>
+                                
+                                    <a class="nav-link collapsed" href="/admin/themsanpham" aria-expanded="false" aria-controls="pagesCollapseError"
+                                        >Thêm sản phẩm
+                                    </a>
+                                    
+                                </nav>
+                            </div>
+
+                            <!--Tin Tức-->
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseNews " aria-expanded="false" aria-controls="collapseNews"
+                            ><div class="sb-nav-link-icon"><i class="fas fa-newspaper"></i></div>
+                           Tin tức
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div></a>
+                            <div class="collapse" id="collapseNews" aria-labelledby="headingThree" data-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                                    <a class="nav-link collapsed" href="/admin/adminNews/1" aria-expanded="false" aria-controls="pagesCollapseAuth"
+                                        >Danh sách tin tức
+                                    </a>
+                                
+                                    <a class="nav-link collapsed" href="/admin/add_News" aria-expanded="false" aria-controls="pagesCollapseError"
+                                        >Thêm tin tức
+                                    </a>
+                                    
+                                </nav>
+                            </div>
+
+                            <div class="sb-sidenav-menu-heading">Khác</div>
+                            <a class="nav-link" href="charts.html"
+                                ><div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                                Đơn hàng</a
+                            ><a class="nav-link" href="tables.html"
+                                ><div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                Slides</a
+                            >
+                        </div>
+                    </div>
+                    <div class="sb-sidenav-footer">
+                        <div class="small">Logged in as:</div>
+                       Admin
+                    </div>
+                </nav>
+            </div>
+            

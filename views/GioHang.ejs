@@ -1,0 +1,93 @@
+<% include libaryHtml.ejs %>
+  <% include header.ejs %>
+  
+
+<!--detail-->
+<div class="detail_cart">
+    <div class="container giohang">
+        <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 cart_leftt">
+                <div class="choice">
+                    <div class="row">
+                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                            <p>
+                                <label class="cchecck"> <!--select All-->
+                                    <input type="checkbox"id="selectall" name="sample" class="selectall" >
+                                    <span class="checkmark"></span>
+                                </label> 
+                               <span class="ml-5">Chọn tất cả </span> 
+
+                            </p> 
+                         </div>
+                         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 del_all"><i class="fas fa-trash-alt"> xóa</i></div>
+               
+                 </div> 
+                </div>
+                    <% if(products != null){ %>
+                    <% products.forEach(function(item){ %> 
+                        <div id="productDisplay" class="list_item"> <!--item-->
+                            <div class="row">
+                                <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"><label class="cchecck">
+                                        <input type="checkbox" name="sample[]" class="checkbox" nameProduct="<%= item.item.product_name %>" data-qty="<%= item.qty %>" data-price="<%= item.price %>" idProduct="<%= item.item._id%>" >
+                                        <span class="checkmark"></span>
+                                    </label>  
+                                </div>
+                                <div class="col-lg-2  col-md-2 col-sm-2 col-xs-2"><img src="/image_Product/<%= item.item.image[0] %>" class="img_cart" ></div>
+                                <div class="col-lg-2  col-md-4 col-sm-2 col-xs-4 name_item"><%= item.item.product_name %></div>
+                                <div class="col-lg-2  col-md-2 col-sm-2 col-xs-5 cover_cost_del">
+                                    <p class="cost_item"><%= item.item.price %> VND</p>
+                                </div>
+                                <div class="col-lg-3  col-md-3 col-sm-3 col-xs-3">
+                                    <div class="number-spinner">
+                                        <div class="input-group number-spinner">
+                                            <span class="input-group-btn">
+                                                <button idProduct="<%= item.item._id%>" type="button" class="btn-number btncartsniper" data-type="minus" data-dir="dwn"><span id="tru"class="fa  fa-minus fa-sm"></span></button>
+                                            </span>
+                                            <input name="quantity[]" class="form-control input-number Snippper_qty text-center" value="<%= item.qty %>" disabled>
+                                            <span class="input-group-btn">
+                                                <button idProduct="<%= item.item._id%>" type="button" class="btn-number btncartsniper" data-type="plus"  data-dir="up"><span class="fa fa-plus fa-sm"></span></button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="priceItem" idProduct="<%=item.item._id %>" class="col-lg-2  col-md-4 col-sm-4 col-xs-4 name_item"><%= item.price %> VND</div>
+                            </div>
+                        </div>
+                    <% }); %>
+                <% } else { %>
+                <p>Không có sản phẩm nào </p>
+                <%} %>    
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 cart_right">
+                <div class="address">
+                    <p class="address_user">Thông tin giỏ hàng</p> 
+                    <hr> 
+                    <div class="row">
+                        <p class="col-6">Sản phẩm</p>
+                        <p class="col-6">Tổng cộng</p>
+                    </div>
+                    <hr>
+                    
+                           
+                    
+                </div>
+                <form method="POST" action="/thanhtoan">
+                    <div id="listItem">
+                    </div>
+                    <div class="info_cart">   
+                       <hr>
+                       <p class="size_info_total">Thành tiền<span class="iff iff1">0 VND</span></p>
+                       <hr>
+                       <p id="Sum_cost" class="size_info_total">Tổng cộng <span class="iff iff1">0 VND</span></p>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block btn_confirm_cart" id="btnComfirm">Xác nhận giỏ hàng</button>
+                </form>
+            </div>
+          </div>
+    </div>
+    <div class="empty_search diableDiv">
+
+    </div>
+  </div>
+ <!--End detail-->
+<% include ./footer %>

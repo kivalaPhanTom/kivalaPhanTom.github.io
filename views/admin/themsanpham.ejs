@@ -1,0 +1,109 @@
+<% include headerAdmin.ejs %> 
+<div id="layoutSidenav_content">
+    <div class = "form-themhang container-fluid">
+        <h1>Thêm sản phẩm</h1>
+        <form action="/UpNewProduct" method="post" class="formUpload">
+            <label>Ảnh sản phẩm</label>
+            <div id="drag-drop-area"></div>
+            <input type="hidden" name="filesProduct" id="filesProduct" class="filesProduct">
+            <div class="form_img"></div>
+            <script>
+                const XHRUpload = Uppy.XHRUpload;// Định nghĩa biến cho plugin  XHRUpload của uppy, cho phép tải ảnh lên
+                let imgs = [];
+
+                var uppy = Uppy.Core()
+                .use(Uppy.Dashboard, { /* darhboard giao diện*/
+                    inline: true,
+                    target: '#drag-drop-area'
+                })
+                .use(XHRUpload, {
+                    endpoint: '/uploadfileProduct' //Đường dẫn tới folder chứa ảnh sau khi upload
+                });
+
+                uppy.on('complete', (result) => { //sau khi upxong 
+                imgs = [
+                    ...imgs, 
+                    ...result.successful.map(item => item.response.body[0].filename)
+                ];
+                document.getElementsByName('filesProduct')[0].value  += ',' + imgs.toString(',');
+                })
+                
+            </script>
+             <div class="mt-3">
+                 <div class="row">
+                     <div class="col-6">
+                        <label>Nhập tên sản phẩm</label><!--Tên-->
+                        <input type="text" class="form-control" name="product_name">
+                        <label>Nhập giá</label>
+                        <input type="text" class="form-control" name="price" placeholder="x.xxx.xxx" >
+                        <label>Nhập số lượng</label>
+                        <input type="text" class="form-control" name="quantity" >
+                        <label>Tên hãng</label>
+                        <select class="form-control" id="exampleFormControlSelect1" name="id_category">
+                          <% listBrand.forEach(function(brand){ %>
+                            <option value="<%= brand._id  %>"><%= brand.category_name %></option>
+                          <% }) %>
+                        </select>
+                     </div>
+                     <div class="col-6">
+                        <label>Nhập chú thích ( *có thể để trống )</label><!--Chú thích-->
+                        <input type="text" class="form-control" name="description" >  
+                        <label>Giá khuyến mãi</label>
+                        <input type="text" class="form-control" name="promotion_price" >   
+                        <label>Năm sản xuất</label>
+                        <input type="text" class="form-control" name="year" >
+                        <label>Có phải là sản phẩm mới nhất hiện nay không</label>
+                        <select class="form-control" id="" name="TopOrNot">
+                            <option value="Không">Không</option>
+                            <option value="Có">Có</option>
+                        </select>
+                    </div>
+                 </div>
+             </div>
+             <hr>
+             <h4>Thông số kỹ thuật</h4>
+             <div class="">
+                 <div class="row">
+                     <div class="col-6">
+                        <label>Màn hình</label>
+                        <input type="text" class="form-control" name="monitor"  >
+                        <label>Camera trước</label>
+                        <input type="text" class="form-control" name="camera_truoc"  >
+                        <label>Bộ nhớ</label>
+                        <input type="text" class="form-control" name="memory" >
+                        <label>GPU</label>
+                        <input type="text" class="form-control" name="gpu"  >
+                        <label>Hệ điều hành</label>
+                        <input type="text" class="form-control" name="operation"  >
+                        <label>Thẻ nhớ</label>
+                         <input type="text" class="form-control" name="micro_sd"  >
+                     </div>
+
+                     <div class="col-6">
+                        <label>Ram</label>
+                        <input type="text" class="form-control" name="ram"   >
+                        <label>Camera sau</label>
+                        <input type="text" class="form-control" name="camera_sau"   >
+                        <label>CPU</label>
+                        <input type="text" class="form-control" name="cpu"  >
+                        <label>Pin</label>
+                        <input type="text" class="form-control" name="pin" >
+                        <label>Thẻ sim</label>
+                        <input type="text" class="form-control" name="sim"  >
+                        <label>Nguồn gốc</label>
+                        <input type="text" class="form-control" name="origin"  >    
+                    </div>
+                 </div>
+             </div>
+               
+            <button type="submit" class="btn btn-primary btn-block mt-3">Thêm vào</button>
+          </form>
+    </div>
+    <footer class="py-4 bg-light mt-auto ml-4">
+        <div class="container-fluid">
+            <p>Được phát triển bởi D2HPhone team</p>
+        </div>
+    </footer>
+</div>
+</body>
+</html>
