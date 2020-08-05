@@ -1,23 +1,114 @@
 var express = require('express');
 var router = express.Router();
 var ModelNews =require('../models/News');
+var ModelProducts =require('../models/Product');
 var moment = require('moment-timezone');
 var Product_Category = require('../models/productCategory')
-var ejs = require('ejs')
-var bodyParser = require('body-parser')
-var app = express()
+var commentsModel = require('../models/comments')
+var commentreplyModel = require('../models/replycomment')
 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({
-    extended: true
-}))
-app.set('view engine', 'ejs')
-//sử dụng mongoose để connect tới mongoDB
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/MyDatabase', {useMongoClient: true}); /*/MyDatabase là tê của  database mà ta đã tạo bên CSDL mongo*/
+/*--------------------------------------------Xử lý phần comment--------------------------------------*/
+router.get('/deleteCommentNews/:commentId/:postId', function(req, res, next) { /* xóa comment */
+  var commentId = req.params.commentId,
+      postId = req.params.postId; 
+      console.log('commentId:',commentId);
+      commentsModel.findByIdAndRemove(commentId).exec();
+      commentreplyModel.find({comment_parent_id:commentId }).remove().exec(); /*xóa bình luận cha thì bình luận con trong nó cũng bị xóa theo */
+      res.redirect('/detail/'+postId); 
+ 
+});
+/* Post trang up thêm comment . */
+router.post('/commentNews/:postId', function(req, res, next) {
+  var postId = req.params.postId,
+      userID = req.body.userID,
+      nameUser = req.body.nameUser,
+      textArea_comment = req.body.textArea_comment;
+  //định nghĩa một đối tượng để insert
+  var motdoituong={
+    'comment' :textArea_comment,    
+    'postId' :postId,
+    'userId':userID,
+    'nameUser':nameUser,
+  }
+  var dataComment = new commentsModel(motdoituong);
+     dataComment.save();//hàm lưu dữ liệu
+     res.redirect('/detail/'+postId)
+});
+
+/*Post Sửa nội dung comment. */
+router.post('/editCommentNews/:idcomment/:postId', function(req, res, next) { //chú ý: lấy từ đường dẫn thì dùng params
+  var id =req.params.idcomment;
+  var postId=req.params.postId;
+    commentsModel.findById(id,function(err,dataComment){
+          dataComment.comment = req.body.text_edit_comment;
+          dataComment.save();
+          res.redirect('/detail/'+postId);
+         
+          console.log("data:"+dataComment);
+    });
+});
+
+/*------End ----Xử lý phần comment--------------------------------------*/
+
+/*------------------------------------------Reply -Xử lý phần comment--------------------------------------*/
+router.get('/deleteCommentReplyNews/:commentReplyId/:postId', function(req, res, next) { /* xóa reply comment */
+  var commentReplyId = req.params.commentReplyId,
+      postId = req.params.postId; 
+      commentreplyModel.findByIdAndRemove(commentReplyId).exec();
+      res.redirect('/detail/'+postId); 
+ 
+});
+/* Post trang up thêm Reply comment . */
+router.post('/ReplycommentNews/:parentCommentId/:postId', function(req, res, next) {
+  var postId = req.params.postId,
+      parentCommentId= req.params.parentCommentId,
+      userReplyID = req.body. userReplyID,
+      nameUserReply= req.body. nameUserReply,
+      textArea_Reply = req.body.textArea_Reply;
+
+  //định nghĩa một đối tượng để insert
+  var motdoituong={
+    'comment_reply':textArea_Reply,   
+    'comment_parent_id':parentCommentId, 
+    'postId' :postId,
+    'userId_reply':userReplyID,
+    'nameUser_reply':nameUserReply,
+  }
+  var dataCommentReply = new commentreplyModel(motdoituong);
+     dataCommentReply.save();//hàm lưu dữ liệu
+     res.redirect('/detail/'+postId)
+
+});
+/*Post Sửa nội dung reply comment. */
+router.post('/editCommentReplyNews/:idcommentReply/:postId', function(req, res, next) { //chú ý: lấy từ đường dẫn thì dùng params
+  var id =req.params.idcommentReply;
+  var postId=req.params.postId;
+    commentreplyModel.findById(id,function(err,dataCommentReply){
+        dataCommentReply.comment_reply = req.body.text_edit_commentReply;
+        dataCommentReply.save();
+          res.redirect('/detail/'+postId);
+
+    });
+});
+/*-------End-----Reply -Xử lý phần comment--------------------------------------*/
+
+
 
 /* GET trang Điểm Tin. */
 router.get('/diemtin/:page',  function(req, res, next) {
+  /* search suggestion */
+  var list_Alldata_search=[];
+  ModelProducts.find().then((memess) => {
+  memess.forEach((document) => {
+    list_Alldata_search.push(document.product_name)  
+  });
+});
+ModelNews.find().then((memes) => {
+  memes.forEach((document) => {
+    list_Alldata_search.push(document.title_news_intro)   
+  });    
+});
+/* end search suggestion */
   var perPage = 9; /* perPage - số dòng dữ liệu trên mỗi trang */
   var page = req.params.page || 1; /* page - biến chứa số trang hiện tại (Lấy từ request) */
   ModelNews.find({})
@@ -32,6 +123,7 @@ router.get('/diemtin/:page',  function(req, res, next) {
               dataBrand:dataBrand,
               moment,
               current: page,
+              list_Alldata_search:list_Alldata_search,
               pages: Math.ceil(count / perPage)
             }); 
           }); 
@@ -40,25 +132,41 @@ router.get('/diemtin/:page',  function(req, res, next) {
 });
 
  /* get dữ liệu về để xem dữ liệu chi tiết bản tin. */
- router.get('/detail/:idcansua', function(req, res, next) { //chú ý: lấy từ đường dẫn thì dùng params
+ router.get('/detail/:idcansua',function(req, res, next) { //chú ý: lấy từ đường dẫn thì dùng params
+  /* search suggestion */
+    var list_Alldata_search=[];
+    ModelProducts.find().then((memess) => {
+    memess.forEach((document) => {
+      list_Alldata_search.push(document.product_name)  
+    });
+  });
+  ModelNews.find().then((memes) => {
+    memes.forEach((document) => {
+      list_Alldata_search.push(document.title_news_intro)   
+    });    
+  });
+/* end search suggestion */
   var id2 = req.params.idcansua;
   ModelNews.find({_id : id2},function(err,dataNews){
     Product_Category.find({},function(err,dataBrand){ 
-    res.render('DiemTin_detail',{title:"sửa dữ liệu",dataNews:dataNews, dataBrand:dataBrand, moment});
-  })
+      commentsModel.find({},function(err,dataComment) {
+        commentreplyModel.find({},function(err,dataCommentReply) {
+          res.render('DiemTin_detail',{dataNews:dataNews, dataBrand:dataBrand, moment, user: req.user, isLoggedIn: req.isLogged, postId:id2, dataComment:dataComment,dataCommentReply:dataCommentReply, list_Alldata_search:list_Alldata_search});
+        })
+      })
+    })
   })
 });
 
 
-module.exports = router;
 
-router.get('/profile', function(req, res){
-  res.render('profile', {user: req.user})
-})
 function isLoggedIn(req, res, next){
   if(req.isAuthenticated()){
+    req.isLogged = true
     return next()
   }
   res.redirect('users/login')
 }
+
+module.exports = router;
 

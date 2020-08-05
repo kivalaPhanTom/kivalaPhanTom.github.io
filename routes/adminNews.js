@@ -1,25 +1,15 @@
 var express = require('express');
-var ModelNews =require('../models/News');
 var router = express.Router();
 var moment = require('moment-timezone');
 var multer  = require('multer'); //sử dụng thư viện multer để up ảnh
-var faker = require('faker');
-var bodyParser = require('body-parser');
 var fs = require('fs')
-var path = require('path')
-var crypto = require('crypto')
+var ModelNews =require('../models/News');
+var ModelProducts =require('../models/Product');
 var Product_Category = require('../models/productCategory')
-var ejs = require('ejs')
-var bodyParser = require('body-parser')
-var app = express()
+var commentsModel = require('../models/comments')
 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({
-    extended: true
-}))
-//sử dụng mongoose để connect tới mongoDB
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/MyDatabase', {useMongoClient: true}); /*/MyDatabase là tê của  database mà ta đã tạo bên CSDL mongo*/
+
+
 // Kết thúc sử dụng mongoose để connect tới mongoDB
 
 /* GET trang thêm tin tức. */
@@ -114,6 +104,7 @@ router.get('/admin/xoa/:idcanxoa/:page', function(req, res, next) {
     var id =req.params.idcanxoa;
     var a=req.params.page;
      ModelNews.findByIdAndRemove(id).exec();
+     commentsModel.find({ postId:id }).remove().exec();
     res.redirect('/admin/adminNews/'+a); //điều hướng tới trang adminNews
    
   });
@@ -136,6 +127,7 @@ router.post('/UpNews', function(req, res, next) {
     }
     var dataNews=new ModelNews(motdoituong);
     dataNews.save();//hàm lưu dữ liệu
+    req.flash('success_msg', 'Thêm tin tức thành công!');
     res.redirect('/admin/add_News');    //điều hướng tới trang admin 
     console.log("dữ liệu thêm vào:"+dataNews)
  });
@@ -160,6 +152,7 @@ router.post('/admin/Edit_News/:idcansua/:page', function(req, res, next) { //ch�
         dataNews.title_news_intro = req.body.title_news_intro;
         dataNews.content_News_intro = req.body.editor1;  //lấy từ form thì dùng body
         dataNews.save();
+        req.flash('success_msg', 'Sửa tin tức thành công!');
         res.redirect('/admin/adminNews/'+a);
         console.log("dữ liệu sau khi sửa:"+dataNews);
    });

@@ -6,12 +6,12 @@ var moment = require('moment-timezone');
 var faker = require('faker')
 var ModelProducts =require('../models/Product');
 var Product_Category = require('../models/productCategory')
-
-//sử dụng mongoose để connect tới mongoDB
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/web'); /*/web là tên của  database mà ta đã tạo bên CSDL mongo*/
-// Kết thúc sử dụng mongoose để connect tới mongoDB
-
+var Order = require('../models/Order')
+var Feedback = require("../models/Feedback")
+var User = require('../models/User')
+var crypto = require('crypto')
+var bcriptjs = require("bcryptjs")
+var passport = require('passport')
 var storageImageProducts = multer1.diskStorage({ //dùng multer tạo store lưu trữ ảnh product
     destination: function (req, file, cb) {
         cb(null, './image_Product')
@@ -30,7 +30,7 @@ router.post('/uploadfileProduct',uploadImageProducts.any(), function(req, res, n
 
 
 /* GET trang Admin. */
-router.get('/admin', function(req, res, next) {
+router.get(('/admin'), isLoggedIn, function(req, res, next) {
   res.render('./admin/index')
 });
 
@@ -54,7 +54,7 @@ router.get('/admin/danhsachhang/:page', function(req, res, next) {
     Product_Category.count().exec(function(err, count) { /* dùng count để tính số trang */
           if (err) throw err;
           res.render('./admin/danhsachhang', { /* hiển thị và gửi dữ liệu đi kèm */
-            listBrand:dataBrand,
+              listBrand:dataBrand,
               moment,
               current: page,
               pages: Math.ceil(count / perPage)
@@ -68,7 +68,7 @@ router.get('/xoaBrand/:idcanxoa/:page', function(req, res, next) {
   var id =req.params.idcanxoa;
   var a =req.params.page;
   Product_Category.findByIdAndRemove(id).exec();
-  ModelProducts.findByIdAndRemove({id_category:id}).exec();
+  ModelProducts.find({ id_category:id }).remove().exec(); //nếu xóa hãng nào thì xóa hết lun những sản phẩm liên quan tới hãng đó
   res.redirect('/admin/danhsachhang/'+a);  
 });
 
@@ -90,6 +90,7 @@ router.post('/UpLogoBrand', function(req, res, next) {
     }
     var dataBrand = new Product_Category(motdoituong);
     dataBrand.save();//hàm lưu dữ liệu
+    req.flash('success_msg', 'Thêm hãng thành công!');
     res.redirect('/admin/themhang'); 
 
  });
@@ -100,6 +101,7 @@ router.get('/admin/Edit_Brand/:idcansua/:page', function(req, res, next) { //ch�
     var a = req.params.page;
 
     Product_Category.find({_id : id2},function(err,dataBrand){
+    req.flash('success_msg', 'Sửa hãng thành công!');
     res.render('./admin/edit_Brand',{title:"sửa dữ liệu",data:dataBrand,a:a});
   })
   });
@@ -149,13 +151,16 @@ router.get('/admin/danhsachsanpham/:page', function(req, res, next) {
   .exec(function(err,dataProduct) { 
     ModelProducts.count().exec(function(err, count) { /* dùng count để tính số trang */
           if (err) throw err;
-          res.render('./admin/danhsachsanpham', { /* hiển thị và gửi dữ liệu đi kèm */
+          Product_Category.find({}, function(err, Brand){
+            res.render('./admin/danhsachsanpham', { /* hiển thị và gửi dữ liệu đi kèm */
               data:dataProduct,
               moment,
               current: page,
-              pages: Math.ceil(count / perPage)
-            
+              pages: Math.ceil(count / perPage),
+              listBrand: Brand
           }); 
+          })
+          
       });
   });
   
@@ -219,6 +224,7 @@ router.post('/UpNewProduct', function(req, res, next) {
     }
     var dataProduct = new ModelProducts(motdoituong);
     dataProduct.save();//hàm lưu dữ liệu
+    req.flash('success_msg', 'Thêm sản phẩm thành công!');
     res.redirect('/admin/themsanpham');   
     console.log("dữ liệu product thêm vào:"+dataProduct);
    
@@ -233,6 +239,7 @@ router.post('/UpNewProduct', function(req, res, next) {
     var a = req.params.page;
     ModelProducts.find({_id : id2},function(err,dataProduct){
       Product_Category.find({},function(err,databrand) {
+        
         res.render('./admin/edit_Product',{title:"sửa dữ liệu",data:dataProduct,listBrand:databrand,a:a});   
       })
     
@@ -269,6 +276,7 @@ router.post('/admin/Edit_Product/:idcansua/:page', function(req, res, next) { //
     dataProduct.origin=req.body.origin;
     dataProduct.year= req.body. year;
     dataProduct.save();
+    req.flash('success_msg', 'Sửa thành công!');
     res.redirect('/admin/danhsachsanpham/'+a);
     res.status(200).send(req.files);
     console.log("data product sau khi sửa:"+dataProduct);
@@ -276,9 +284,77 @@ router.post('/admin/Edit_Product/:idcansua/:page', function(req, res, next) { //
     });
 
 });
+//trang danh sach don hang
+router.get('/admin/donhang', function(req, res){
+  Order.find({}, function(err, orders){
+    res.render('./admin/order',{orders})
+  })
+  
+})
+// get thong tin don hang
+router.get('/admin/donhang/:id', function(req, res){
+  console.log(req.params.id)
+  Order.findOne({_id:req.params.id}, function(err, order){
+    console.log(order)
+    Feedback.findOne({id_order:req.params.id}, function(err, feedback){
+      if(feedback){
+        var rating = feedback.rate;
+        var feedbacks = feedback.feedbacks;
+        res.render('./admin/order_detail', {order, rating, feedbacks})
+      }
+      else{
+        var rating = "";
+        var feedbacks = "";
+        res.render('./admin/order_detail', {order, rating, feedbacks})
+      }
+    })
+    
+  } )
+  
+})
+//click de xac nhan da xu ly don hang
+router.get('/admin/completeOrder/:id', function(req, res){
+  console.log(req.params.id)
+  Order.updateOne({_id:req.params.id}, {completed: 1}, function(err, order){
+    console.log(order)
+    res.redirect('/admin/donhang/'+req.params.id)
+  } )
+  
+})
+//dang xuat admin
+router.get('/admin/logout', isLoggedIn, (req, res) =>{
+  delete req.session.cart
+  req.logout();
+  req.flash('success_msg', 'Đăng xuất thành công!');
+  res.redirect('/admin/login')  
+})
+//dang nhap vao trang admin
+router.get(('/admin/login'), function(req, res){
+  res.render('./admin/login',{msg:""})
+})
+router.post(('/admin/login'), (req, res, next) =>{
+  console.log(req.body)
+  passport.authenticate('local', {
+    successRedirect: '/admin',
+    failureRedirect: '/admin/login',
+    failureFlash: true
+  })(req, res, next);
+})
 
 /*---------------------------------------------------*/
-
+function isLoggedIn(req, res, next){
+  if(!req.user){
+    return res.render('./admin/login',{msg:""})
+  }
+  else{
+    if(req.user.Role == "customer"){
+      return res.render('./admin/login',{msg:"You are not authorized to access this page"})
+    }
+    else{
+      return next()
+    }
+  }
+}
 
 module.exports = router;
 

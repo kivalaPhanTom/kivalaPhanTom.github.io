@@ -1,7 +1,5 @@
 <% include libaryHtml.ejs %>
   <% include header.ejs %>
-  
-
 <!--detail-->
 <div class="detail_cart">
     <div class="container giohang">
@@ -19,7 +17,7 @@
 
                             </p> 
                          </div>
-                         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 del_all"><i class="fas fa-trash-alt"> xóa</i></div>
+                         
                
                  </div> 
                 </div>
@@ -28,7 +26,7 @@
                         <div id="productDisplay" class="list_item"> <!--item-->
                             <div class="row">
                                 <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"><label class="cchecck">
-                                        <input type="checkbox" name="sample[]" class="checkbox" nameProduct="<%= item.item.product_name %>" data-qty="<%= item.qty %>" data-price="<%= item.price %>" idProduct="<%= item.item._id%>" >
+                                        <input type="checkbox" name="sample[]" class="checkbox  checkbox_cart" nameProduct="<%= item.item.product_name %>" data-qty="<%= item.qty %>" data-price="<%= item.price %>" idProduct="<%= item.item._id%>" >
                                         <span class="checkmark"></span>
                                     </label>  
                                 </div>
@@ -85,9 +83,9 @@
             </div>
           </div>
     </div>
-    <div class="empty_search diableDiv">
-
-    </div>
   </div>
- <!--End detail-->
+  
+  <% for(i=0; i < list_Alldata_search.length;i++){ %>
+	<p class="list"><%= list_Alldata_search[i] %></p>
+<% } %>	
 <% include ./footer %>

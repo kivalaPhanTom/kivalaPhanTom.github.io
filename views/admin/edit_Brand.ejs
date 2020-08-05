@@ -6,6 +6,14 @@
                         <h3 class="text-center">Trang sửa hãng sản phẩm</h3>
                                   <div class="addt_new_item "><!--Bảng Sửa Hãng sản phẩm-->
                                     <h3>Sửa đổi </h3>
+                                    <% if(success_msg != '') { %>
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                            <%= success_msg %>
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    <% } %>
                                     <label for="noteContent">Thêm ảnh</label>
                                 
                                     <% data.forEach(function(dataOfBrand){ %>

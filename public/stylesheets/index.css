@@ -16,6 +16,9 @@
 .fa-shopping-cart{
     font-size: 30px;
 }
+.navbar{
+    width: 100%;
+}
 .navbar-brand{
     font-weight: 700;
     font-size: 37px;
@@ -60,6 +63,17 @@ nav{
     border: none;
 }
 /* chỉnh sửa Slide */
+.carousel-inner{
+    height: 500px !important;
+    background-image:  url('../images/bakgroundslide.jpg');
+}
+.carousel-item{
+    height: 500px !important;
+}
+.img_slider{
+    height: 500px !important;
+}
+
 .infoitem{
     background-color: white !important;
     border: none;
@@ -110,6 +124,27 @@ h3.Top{
     width: 500px;
     height: 400px;
 }
+@media (max-width:991px){
+    .carousel-inner{
+        height: 450px !important;
+        width:500px;
+    }
+    .carousel-item{
+        height: 450px !important;
+        width:500px;
+    }
+    .img_slider{
+        height: 450px !important;
+        width:500px;
+    }
+    .wellcome{
+        font-size:50px;
+    }
+    .wellcome1{
+        margin-left: 50%;
+    }
+}
+
 @media (max-width:989px){
     .item{
         width: 420px;
@@ -123,16 +158,18 @@ h3.Top{
         font-size:50px;
     }
     .wellcome1{
-        margin-left: 20%;
+        margin-left: 45%;
     }
 }
-
-@media (max-width:762px){
+@media (max-width:767px){
 
     .wellcome{
         font-size:50px;
         margin-left: none;
-        margin-top: 30%;
+        margin-top: 10%;
+    }
+    .wellcome1{
+        margin-left:18%;
     }
 }
 @media (max-width:575px){
@@ -140,15 +177,33 @@ h3.Top{
     .wellcome1{
        
         margin-left: none;
-        margin-top: 20%;
+        margin-top: 5%;
+    }
+    .carousel-inner{
+        height: 400px !important;
+        width:450px;
+    }
+    .carousel-item{
+        height: 400px !important;
+        width:450px;
+    }
+    .img_slider{
+        height: 400px !important;
+        width:450px;
     }
 }
-@media (max-width:503px){
-
-    .wellcome1{
-       
-        margin-left: none;
-        margin-top: 25%;
+@media (max-width:476px){
+    .carousel-inner{
+        height: 380px !important;
+        width:400px;
+    }
+    .carousel-item{
+        height: 380px !important;
+        width:400px;
+    }
+    .img_slider{
+        height: 380px !important;
+        width:400px;
     }
 }
 @media (max-width:436px){
@@ -158,7 +213,7 @@ h3.Top{
     .wellcome{
         
         margin-left: none;
-        margin-top: 30%;
+        margin-top: 10%;
     }
 }
 @media (max-width:435px){
@@ -173,10 +228,37 @@ h3.Top{
     .wellcome1{
         font-size:35px;
     }
-    .wellcome{
-        
-        margin-left: none;
-        margin-top: 30%;
+}
+@media (max-width:415px){
+    .carousel-inner{
+        height:350px !important;
+        width:370px;
+    }
+    .carousel-item{
+        height:350px !important;
+        width:370px;
+    }
+    .img_slider{
+        height:350px !important;
+        width:370px;
+    }
+}
+@media (max-width:397px){
+    .carousel-inner{
+        height:270px !important;
+        width:300px;
+        margin-left:3%;
+    }
+    .carousel-item{
+        height:270px !important;
+        width:300px;
+    }
+    .img_slider{
+        height:270px !important;
+        width:300px;
+    }
+    .wellcome1{
+        font-size:30px !important;
     }
 }
 @media (max-width:362px){
@@ -188,10 +270,7 @@ h3.Top{
         width:280px;
         height: 200px;
     }
-    .wellcome1{
-        
-        margin-top:40%;
-    }
+
     .wellcome{
         font-size:28px;
         margin-left: none;
@@ -200,9 +279,16 @@ h3.Top{
     .Top{
         font-size:25px;
     }
+    .wellcome1{
+        font-size:25px !important;
+    }
 }
 
 /*end chỉnh sửa Slide */
+.name_slide_intro:hover{
+    text-decoration: none;
+
+}
 .special{
     margin-top: 150px;
 }
@@ -670,6 +756,7 @@ height: 44px;
     position: absolute;
     top:350px;left: 0;
     margin-left: 10px;
+    width: 100%;
 }
 .Add_to_cart{
     margin-top:-35px;
@@ -1903,6 +1990,15 @@ list-style: none;
     margin-right: 10%;
     margin-left:18%;
 }
+@media (max-width:1199px){
+    .HinhVuong1{  
+        top:5%;
+        
+     }
+     .HinhVuong2{
+        top:74%;
+     }   
+ }
 @media (max-width:991px){
     .HinhVuong1{  
         width: 200px;
@@ -1911,11 +2007,9 @@ list-style: none;
         left: 72%;
      }
      .HinhVuong2{
-       
         width: 200px;
         height: 160px;
-       
-        top:76%;
+        top:85%;
         left:5%; 
      }   
  }
@@ -1930,11 +2024,9 @@ list-style: none;
      }
      
      .HinhVuong2{
-       
         width: 200px;
         height: 160px;
-       
-        top:76%;
+        top:89%;
         left:1%; 
      } 
 
@@ -1960,20 +2052,10 @@ list-style: none;
          width: 60%;     
     }
      .HinhVuong1{
-       
-        width: 150px;
-        height: 160px;
-     
-        top: 10%;
-        left: 70%;
+       display: none;
      } 
      .HinhVuong2{
-       
-        width: 150px;
-        height: 160px;
-       
-        top:100%;
-        left:6%; 
+       display: none;
      } 
 
     .fa-hand-point-right{
@@ -2072,6 +2154,20 @@ list-style: none;
     color: #c59e2bb3
     
 }
+@media (min-width:992px){
+    .HinhVuong11{  
+        width: 200px;
+        height: 160px;
+        top: 5%;
+        left: 72%;
+     }
+     .HinhVuong22{ 
+        width: 200px;
+        height: 160px; 
+        top:52%;
+        left:5%; 
+     }    
+ }
 @media (max-width:991px){
     .HinhVuong11{  
         width: 200px;
@@ -2082,10 +2178,9 @@ list-style: none;
      .HinhVuong22{ 
         width: 200px;
         height: 160px; 
-        top:99%;
+        top:70%;
         left:3%; 
-     } 
-       
+     }    
  }
  @media (max-width:767px){
      .beta-form-checkout2{
@@ -2102,7 +2197,7 @@ list-style: none;
      .HinhVuong22{
         width: 200px;
         height: 160px;
-        top:98%;
+        top:72%;
         left:-60px; 
      } 
 
@@ -2125,20 +2220,11 @@ list-style: none;
          width: 70%;     
     }
      .HinhVuong11{
-       
-        width: 150px;
-        height: 160px;
-     
-        top: 2%;
-        left: 70%;
+        display: none;
      } 
      .HinhVuong22{
        
-        width: 150px;
-        height: 160px;
-       
-        top:98%;
-        left:2%; 
+        display: none;
      } 
 
     .fa-hand-point-right{
@@ -2197,9 +2283,7 @@ list-style: none;
   .bolder{
     font-weight: bolder;
 }
-.alert{
-    color: greenyellow;
-}
+
 .bg-lightgray{
     background-color: lightgray !important;
 }
@@ -2253,10 +2337,16 @@ list-style: none;
     font-family: 'Roboto Condensed', sans-serif;
 
 }
+.login_social:hover{
+    text-decoration: none;
+}
 .anh_sanpham{
     border-radius:25px;   
 }
-
+.account:hover{
+    text-decoration: none;
+    color: #004085;
+}
 .activeMenu{
     background-color:#ecb338 !important;
     font-weight:650 !important;
@@ -2264,7 +2354,7 @@ list-style: none;
 }
 @media (min-width:1337px){
     #collapsibleNavId {
-         margin-left:10%; /* phan sua 2020-07-08*/
+         margin-left:9%; /* phan sua 2020-07-08*/
    }
    nav#menu {
     height: 80px;
@@ -2314,4 +2404,63 @@ list-style: none;
         font-size:16px;
      }
 }
-/*End custom comment*/
+/* rating */
+@import url(//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+/*reset css*/
+div,label{margin:0;padding:0;}
+
+h1{font-size:4em;margin:10px;}
+/****** Style Star Rating Widget *****/
+#rating{border:none;float:left;}
+#rating>input{display:none;}/*ẩn input radio - vì chúng ta đã có label là GUI*/
+#rating>label:before{margin:5px;font-size:2em;font-family:FontAwesome;display:inline-block;content:"\f005";}/*1 ngôi sao*/
+#rating>.half:before{content:"\f089";position:absolute;}/*0.5 ngôi sao*/
+#rating>label{color:#ddd;float:right;}/*float:right để lật ngược các ngôi sao lại đúng theo thứ tự trong thực tế*/
+/*thêm màu cho sao đã chọn và các ngôi sao phía trước*/
+#rating>input:checked~label,
+#rating:not(:checked)>label:hover, 
+#rating:not(:checked)>label:hover~label{color:#FFD700;}
+/* Hover vào các sao phía trước ngôi sao đã chọn*/
+
+.resutl_item_search{ display:none;
+}
+#loadMore {
+  
+    color: white;
+    cursor:pointer;
+}
+
+#showLess {
+    color: white;
+    cursor:pointer;
+    display:none;
+}
+
+
+.list{
+    opacity:0;
+    visibility: hidden;
+    display:none;
+   
+}
+.notFind{
+    font-family: 'Oswald', sans-serif;
+   color: #dc3545e8;
+}
+.resultSearch{
+    font-family: 'Oswald', sans-serif;
+}
+.btn_confirm_cart{
+    opacity: 0;
+}
+.btn_visible_submit{
+    opacity: 1;
+    
+}
+.btn_confirm_cart{
+    opacity: 0;
+}
+.btn_visible_submit{
+    opacity: 1;
+    
+}

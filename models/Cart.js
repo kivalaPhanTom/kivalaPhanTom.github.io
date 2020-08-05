@@ -10,11 +10,20 @@ module.exports = function Cart(oldCart){
             storedItem = this.items[id] = {item: item, qty: 0, price : 0};
         }
         storedItem.qty++;
-        storedItem.price = MakeInterger(storedItem.item.price) * storedItem.qty;
-        storedItem.price = MakeDecimal(storedItem.price)
-        this.customerId = cusId;
-        this.totalQuatity++;
-        this.totalPrice += MakeInterger(storedItem.item.price);
+        if(storedItem.item.promotion_price == ""){
+            storedItem.price = MakeInterger(storedItem.item.price) * storedItem.qty;
+            storedItem.price = MakeDecimal(storedItem.price)
+            this.customerId = cusId;
+            this.totalQuatity++;
+            this.totalPrice += MakeInterger(storedItem.item.price);
+        }
+        else{
+            storedItem.price = MakeInterger(storedItem.item.promotion_price) * storedItem.qty;
+            storedItem.price = MakeDecimal(storedItem.price)
+            this.customerId = cusId;
+            this.totalQuatity++;
+            this.totalPrice += MakeInterger(storedItem.item.price);
+        }
     }
     this.reduceByOne = function(id){
         this.items[id].qty--;

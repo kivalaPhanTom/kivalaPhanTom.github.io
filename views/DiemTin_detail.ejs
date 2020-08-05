@@ -1,46 +1,168 @@
 
 <% include libaryHtml.ejs %>
-  <% include header.ejs %>
+<% include header.ejs %>
 <!--Chi tiết-->
 <div class="NenXam">
-    <div class="container chitiet">
-        <div class="row">
-         
+  <div class="container chitiet">
+      <div class="row">
+        <div class="ml-3 mr-2">
           <% dataNews.forEach(function(dataOfNewsPage){ %> 
             <%- dataOfNewsPage.content_News_intro %>
-         <% })  %>    
-         <div class="empty_search diableDiv">
-
+         <% })  %> 
         </div>
+         
+       <div class="empty_search diableDiv">
+       </div>
+      </div>
 
-    
+      <div class=""><!--Khối bình luận-->
+        <% if (typeof user != 'undefined') { %>
+           
+            <div class="comment mt-5"> <!--Khối comment-->
+                <form action="/commentNews/<%- postId %>" method="post" >
+                    <div class="">
+                        <p class="name_author"><strong><%= user.Name %></strong></p>
+                        <textarea name="textArea_comment" id="textArea_comment" style="width: 100%;  border-radius:5px;" placeholder="  Bắt đầu thảo luận..." ></textarea>
+                        <input name="userID"type="hidden" value="<%= user._id %>">
+                        <input name="nameUser"type="hidden" value="<%= user.Name %>">
+                        <button style= "float:right; margin-bottom: 10px;" type="submit" class="btn btn-secondary btn_binhluan">Bình luận</button>
+                        <hr style= "clear:both; background-color:#fd7e14ad;">
+                    </div>
+                </form>
+            </div><!--End Khối comment-->
+           
+            <div class="">
+                <% for (var i = dataComment.length; i > 0 ; i--){ %>  <!--Duyệt mảng dataComment -->
+                    <% if (dataComment[i-1].postId ==  postId) { %> <!--Kiểm tra xem postId của mảng dataComment có trùng khớp với id bài post hiện tại ko, nếu có thi in ra những cmt liên quan tới bài post đó-->
+                    <div class="comments">
+                        <p><Strong  class="name_author"><%= dataComment[i-1].nameUser %></Strong> <label class="time_comment" for=""><%=moment(dataComment[i-1].time_comment ).format(' h:mm:ss a, DD/MM/YYYY') %></label></p>
+                        <p style="margin-top:-30px;"class="content_comment"><%= dataComment[i-1].comment %></p>
+
+                        <p style="font-size: 16px;margin-left: 20px;">
+                                <% if ( user._id == dataComment[i-1].userId) { %> <!--Nếu tài khoản user đang đăng nhập trùng khớp với tài khoản user comment thì mới cho phép hiển thị nút sửa,xóa-->
+                                   <a href=""  data-toggle="modal" data-target="#modal<%= dataComment[i-1]._id %>">Sửa</a> | <a  href="/deleteComment/<%= dataComment[i-1]._id %>/<%- postId %>">Xóa</a> |
+                                <% }  %> 
+                                <% var s=0 %>
+                                <% for (var j=dataCommentReply.length; j > 0  ; j--){ %>  
+                                 
+                                    <% if ( dataCommentReply[j-1].comment_parent_id == dataComment[i-1]._id) { %>
+                                       <% var s=s+1 %>
+                                   <% }  %> 
+                                <% }  %> 
+                                
+                                <a href="#" class="comment-reply-btn">lượt trả lời:  <%= s %></a>  
+                                <div class="Reply_Comment ml-5" ><!--Khối reply comment-->
+                                  <div class="">
+                                      <form action="/ReplycommentNews/<%= dataComment[i-1]._id%>/<%- postId %>" method="post"> <!--Form phản hồi-->
+                                          <p><strong><%= user.Name %></strong></p>
+                                          <textarea name="textArea_Reply" style="width: 100%; border-radius:5px; " placeholder="Phản hồi bình luận..." ></textarea>
+                                          <input name="userReplyID"type="hidden" value="<%= user._id %>">
+                                          <input name="nameUserReply"type="hidden" value="<%= user.Name %>">
+                                          <button style= "float:right; margin-bottom: 10px;" type="submit" class="btn btn-secondary btn_binhluan">Phản hồi</button>
+                                      </form>
+                                  </div>
+                                
+                                  <% if (dataCommentReply != 'null') { %>
+                                      <% for (var j=dataCommentReply.length; j > 0  ; j--){ %>  
+                                          <% if ( dataCommentReply[j-1].comment_parent_id == dataComment[i-1]._id) { %>
+                                          <div class="reply_item mb-3" style="background-color:#F3F4F4; border-radius:10px; clear: both;">
+                                              <div class=" ml-3 mr-2" style="padding-top:8px;">                         
+                                                  <p class="info">Đã trả lời: <strong><%= dataCommentReply[j-1].nameUser_reply%></strong> - <lable style="color:gray;"><%=moment(dataCommentReply[j-1].time_comment_reply ).format(' h:mm:ss a, DD/MM/YYYY') %></lable></p>
+                                              </div>
+                                              <div class="row">
+                                                  <div class="col-12 ml-4">
+                                                      <p  style="margin-top:-20px;" ><%= dataCommentReply[j-1].comment_reply %></p>
+                                                      <p style="font-size: 16px; margin-left: 20px; float: right; margin-right: 50px;">
+                                                          <% if ( user._id ==dataCommentReply[j-1].userId_reply) { %> <!--Nếu tài khoản user đang đăng nhập trùng khớp với tài khoản user comment thì mới cho phép hiển thị nút sửa,xóa-->
+                                                             <a href=""data-toggle="modal" data-target="#modal<%= dataCommentReply[j-1]._id %>">Sửa</a> | <a href="/deleteCommentReply/<%= dataCommentReply[j-1]._id %>/<%- postId %>"> Xóa</a> 
+                                                          <% }  %> 
+                                                          
+                                                      </p>
+                                                         
+                    <!-- Modal -->
+                              <div class="modal fade" id="modal<%= dataCommentReply[j-1]._id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                  <div class="modal-dialog" role="document">
+                                  <div class="modal-content">
+                                      <form  action="/editCommentReplyNews/<%= dataCommentReply[j-1]._id %>/<%- postId %>" method="post">
+                                          <div class="modal-header">
+                                          <h5 class="modal-title" id="exampleModalLabel">Chỉnh sửa bình luận</h5>
+                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                              <span aria-hidden="true">&times;</span>
+                                          </button>
+                                          </div>
+                                          <div class="modal-body">
+                                          <textarea style="width: 100%; border-radius:5px; padding-top:20px; padding-bottom:20px;"name="text_edit_commentReply"><%= dataCommentReply[j-1].comment_reply %></textarea>
+                                          </div>
+                                          <div class="modal-footer">
+                                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                          <button type="submit" class="btn btn-primary">Lưu lại</button>
+                                          </div>
+                                  </form>
+                                  </div>
+                                  </div>
+                              </div>
+                                <!-- End Modal -->
+                                                </div>
+                                              </div>
+                                            
+                                          </div>
+                                          <% }  %> 
+                                      <% }  %> 
+                                      
+                                  <% } else {  %> 
+                                  <% }  %> 
+                              </div><!--End Khối reply comment--> 
+                        </p>
+
+                         <!-- Modal -->
+                         <div class="modal fade" id="modal<%= dataComment[i-1]._id %>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <form  action="/editCommentNews/<%= dataComment[i-1]._id %>/<%- postId %>" method="post">
+                                    <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Chỉnh sửa bình luận</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </div>
+                                    <div class="modal-body">
+                                    <textarea style="width: 100%; border-radius:5px; padding-top:20px; padding-bottom:20px;"name="text_edit_comment"><%= dataComment[i-1].comment %></textarea>
+                                    </div>
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                    <button type="submit" class="btn btn-primary">Lưu lại</button>
+                                    </div>
+                            </form>
+                            </div>
+                            </div>
+                        </div>
+                         <!--End  Modal -->
+                       
+                           
+                    
+                    
+                        <hr style="clear: both;">
+                   </div>
+                   <% }  %> 
+                <% }  %> 
+        <% } else { %>
+             <p>Bạn phải đăng nhập mới có thể bình luận và thấy được bình luận từ những người khác !!!</p>
+        <% }  %> 
+
+       
+      
         </div>
-        <div class="comment mt-5"> <!--Khối comment-->
-          <form  action=""  method="POST">
-          <div class="">
-              <p class="name_author"><strong>Tên người dùng bình luận </strong></p>
-              <textarea name="" id="textArea_comment" style="width: 100%; " placeholder="  Bắt đầu thảo luận..."></textarea>
-              <button style= "float:right; margin-bottom: 10px;"type="button" class="btn btn-secondary btn_binhluan">Bình luận</button>
-              <hr style= "clear:both; background-color:#fd7e14ad;">
-          </div>
-          <div class="">
-              <div class="">
-                  <p><Strong  class="name_author">Tên người dùng đã comment</Strong> <label class="time_comment" for="">Thời gian comment</label></p>
-                   <p class="content_comment">Nội dung comment</p>
-                    <p style="font-size: 16px;margin-left: 20px;"><a>Sửa</a> | <a>Xóa</a> | <a>lượt trả lời</a></p>
-                    <hr>
-             </div>
-
-          </div>
-        </form>
-   </div><!--End Khối comment-->
-    </div>
+    </div> <!--End khối bình luận-->
+  </div>
 </div>
 
 <!--End Chi tiết-->
 <!--footer-->
-  <% include footer.ejs %> 
+<% for(i=0; i < list_Alldata_search.length;i++){ %>
+    <p class="list"><%= list_Alldata_search[i] %></p>
+  <% } %>
+<% include footer.ejs %> 
 <!--End footer-->
 
-  </body>
+</body>
 </html>

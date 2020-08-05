@@ -1,0 +1,70 @@
+{ 
+    "_id" : ObjectId("5f0feca509c0135e7c37d1e8"), 
+    "image" : [
+        "1594879140896-samsung.PNG"
+    ], 
+    "category_name" : "Samsung", 
+    "description" : "", 
+    "createDate" : ISODate("2020-07-16T05:59:01.512+0000"), 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("5f0fecae09c0135e7c37d1e9"), 
+    "image" : [
+        "1594879150220-huawei.PNG"
+    ], 
+    "category_name" : "Huawei", 
+    "description" : "", 
+    "createDate" : ISODate("2020-07-16T05:59:10.717+0000"), 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("5f0fecbc09c0135e7c37d1ea"), 
+    "image" : [
+        "1594879163997-iphone.PNG"
+    ], 
+    "category_name" : "Iphone", 
+    "description" : "", 
+    "createDate" : ISODate("2020-07-16T05:59:24.539+0000"), 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("5f0fecca09c0135e7c37d1eb"), 
+    "image" : [
+        "1594879175126-oppo.PNG"
+    ], 
+    "category_name" : "Oppo", 
+    "description" : "", 
+    "createDate" : ISODate("2020-07-16T05:59:38.760+0000"), 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("5f0fecd909c0135e7c37d1ec"), 
+    "image" : [
+        "1594879192958-vivo.PNG"
+    ], 
+    "category_name" : "Vivo", 
+    "description" : "", 
+    "createDate" : ISODate("2020-07-16T05:59:53.602+0000"), 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("5f0fece809c0135e7c37d1ed"), 
+    "image" : [
+        "1594879201397-vsmart.PNG"
+    ], 
+    "category_name" : "Vsmart", 
+    "description" : "", 
+    "createDate" : ISODate("2020-07-16T06:00:08.227+0000"), 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("5f0fecf509c0135e7c37d1ee"), 
+    "image" : [
+        "1594879220435-mi.PNG"
+    ], 
+    "category_name" : "Xiaomi", 
+    "description" : "", 
+    "createDate" : ISODate("2020-07-16T06:00:21.398+0000"), 
+    "__v" : NumberInt(0)
+}

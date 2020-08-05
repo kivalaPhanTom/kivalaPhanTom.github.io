@@ -1,26 +1,6 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <title>Title</title>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-	<script src="https://kit.fontawesome.com/31b5a77c7b.js" crossorigin="anonymous"></script> <!-- Nhúng font-Awesome -->
 
-	<!--Link CSS-->
-	<link rel="stylesheet" href="../stylesheets/index.css">
-
-	<!--Link JS-->
-	<script type="text/javascript" src="../javascripts/index.js"></script>
-
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<% include libaryHtml.ejs %>
 
 
 </head>
@@ -42,34 +22,57 @@
 					
 					<div class="formdangnhap1">
 						<h4 class="text-center h4DangNhap ">Đăng nhập</h4>
-						<div class="space20">&nbsp;</div>
-						<% include ./partials/messages %>
-						<button class="fb white btn btn-dark"><i class="fab fa-facebook-f white"></i> 
-                			<a href="/auth/fb">Sign in with Facebook</a>
-						</button>
-						<button class="gg white btn btn-dark"><i class="fab fa-google-plus-g white"></i>
-							<a href="/auth/gg">Sign in with Google+</a>
-						</button>
-						
+					
 						<div class="form-block">
 							<label for="email"class="email">Email</label>
-							<input type="email" id="email" name="Email" required>
+							<input style="border-radius: 4px;border: 1px solid #ccc;"type="email" id="email" name="Email" required>
 						</div>
 						<div class="form-block form_pass">
 							<label for="phone"class="password">Mật khẩu</label>
-							<input type="password" id="phone" name="Password" required>
-                        </div>	
-                        <a class="forgot_password"href=""><p>Quên mật khẩu ?</p><button class="btn btn-primary" type="submit ">Đăng nhập</button></a>
-						<ul class="back_point">
-                            <li class="one"><a href="../"class="quaytrove"><p><i class="fas fa-backward"></i>  Trở về trang chủ</p></a></li>
-                            <li class="one"><a href="register"class="quaytrove"><p>Chưa có tài khoản? <i class="fas fa-forward"></i></p></a></li>
-                        </ul>
-					</div>
-					<div class="col-sm-3"></div>
+							<input style="border-radius: 4px;border: 1px solid #ccc;" type="password" id="phone" name="Password" required>
+						</div>	
+
+						<div class="login_or_forgotPass">
+							<div class="row">
+								<div class="col-6">
+									<button class="btn btn-primary" type="submit ">Đăng nhập</button>
+								</div>
+								<div class="col-6">
+									<a class="forgot_password"href="/users/forgot"><p>Quên mật khẩu ?</p></a>
+								</div>
+							</div>
+						</div>
+						
+						<div  class="login_FB_GG mb-2"> <!--Khối đăng nhập bằng fb,gg-->
+							<div class="space20">&nbsp;</div>
+							<% include ./partials/messages %>
+							<div class="row">
+								<div class="col-6">
+									<button style="background-color:#3B5998; color:white; width:100%;" class="fb white btn "><i class="fab fa-facebook-f white"></i> 
+										<a class="login_social" style=" color:white; font-size:17px;"href="/auth/fb">Sign in with Facebook</a>
+									</button>
+								</div>
+								<div class="col-6">
+									<button  style="background-color:#EA4335; color:white; width:100%;" class="gg white btn "><i class="fab fa-google-plus-g white"></i>
+										<a class="login_social" style=" color:white;  font-size:17px;" href="/auth/gg">Sign in with Google+</a>
+									</button>
+								</div>
+							</div>	
+						</div><!--End Khối đăng nhập bằng fb,gg-->
+                      <div class="Back_or_Next"> <!--Khối quay trở về trang chủ or chuyển qua trang tạo tài khoản-->
+						  <div class="row">
+							<div class="col-6">
+								<a href="../"class="quaytrove"><p><i class="fas fa-backward"></i>  Trở về trang chủ</p></a>
+							  </div>
+							  <div class="col-6">
+								<a href="/users/register"class="quaytrove"><p>Chưa có tài khoản? <i class="fas fa-forward"></i></p></a>
+							</div>
+						  </div>
+					  </div>
+					</div><!--End Khối quay trở về trang chủ or chuyển qua trang tạo tài khoản-->
 				</div>
 			</form>
-        
-      
+		
 	</div> 
   </body>
 </html>

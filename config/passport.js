@@ -50,10 +50,12 @@ module.exports = function (passport) {
                     return done(null, user)
                 }
                 else{
+                    Role = "customer"
                     var newUser = new User({
                         Social_id: profile._json.id,
                         Name: profile._json.name,
-                        Email: profile._json.email
+                        Email: profile._json.email,
+                        Role
                     })
                     newUser.save((err)=>{
                         return done(null, newUser)

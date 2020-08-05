@@ -26,7 +26,7 @@
               <% if(dataProductHot[i-1].promotion_price !== ''){ %> <!--Lọc ra sản phẩm có giảm giá-->
                 <div class="detail_Sanpham col-lg-4 col-md-4 col-sm-6 col-xs-12 mt-2 <%= dataProductHot[i-1].id_category %>"> <!--item-->
                     <div class="">
-                    <a class="a_anh" href="/detailGiamGia/<%= dataProductHot[i-1]._id %>"><img src="/image_Product/<%= dataProductHot[i-1].image[0]%>"class="img-fluid Anh_San_Pham" ></a>
+                    <a class="a_anh" href="/detailPR/<%= dataProductHot[i-1]._id %>"><img src="/image_Product/<%= dataProductHot[i-1].image[0]%>"class="img-fluid Anh_San_Pham" ></a>
                     <div class="div_name_product"><p class="name_Product"><%= dataProductHot[i-1].product_name %></p></div>
                     <div class="row index">
                       
@@ -49,7 +49,8 @@
               <% }  %>   
             <% } %>	
           </div>
-      </div>    
+      </div>   
+     
     </div>
     <div class="empty_search diableDiv">
 
@@ -84,10 +85,14 @@
           </ul>
       <% } %>
 </div>
+</div>
 <!--End Chi tiết-->
   <!--footer-->
 
 <!--End footer-->
+<% for(i=0; i < list_Alldata_search.length;i++){ %>
+  <p class="list"><%= list_Alldata_search[i] %></p>
+<% } %>	
 <% include footer.ejs %> 
 <!--Nút lên trang đầu-->
 

@@ -3,6 +3,14 @@
     <div class = "form-themhang container-fluid">
         <h1>Thêm sản phẩm</h1>
         <form action="/UpNewProduct" method="post" class="formUpload">
+            <% if(success_msg != '') { %>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <%= success_msg %>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            <% } %>
             <label>Ảnh sản phẩm</label>
             <div id="drag-drop-area"></div>
             <input type="hidden" name="filesProduct" id="filesProduct" class="filesProduct">

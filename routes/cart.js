@@ -5,34 +5,51 @@
     var urldb = 'mongodb://localhost:27017'
     var Cart = require("../models/Cart")
     var Product = require("../models/Product");
-const { months } = require('moment-timezone');
+    var ModelNews =require('../models/News');
+    var Order = require('../models/Order')
+    const { months } = require('moment-timezone');
+    var Product_Category = require('../models/productCategory')
+    var Feedback = require('../models/Feedback')
     /* GET home page. */
-
     MongoClient.connect(urldb, {useNewUrlParser: true}, function(err, client){
-        var db = client.db('web');
+        var db = client.db('MyDatabase');
         router.get('/cart', function(req, res, next) {
-            
-            if(!isEmpty(req.session.cart))
-            {
-                var cart = new Cart(req.session.cart);
-                res.render('GioHang', {products: cart.generateArray(), totalPrice: cart.totalPrice});
-            }
-            if(req.user){
-                db.collection("Cart").findOne({customerId : String(req.user._id)}, function(err, data){
-                    if(data){
-                        var cart = new Cart(data);
-                        res.render('GioHang', {products: cart.generateArray(), totalPrice: data.totalPrice});
-                    }
-                    else{
-                        res.render('GioHang', {products: null, totalPrice: "0"});
-                    }
-                    
-                })  
-            }
-            else{
-                res.render('GioHang', {products: null, totalPrice: "0"});
-            }
-            
+             /* search suggestion */
+                    var list_Alldata_search=[];
+                    Product.find().then((memess) => {
+                    memess.forEach((document) => {
+                        list_Alldata_search.push(document.product_name)  
+                    });
+                    });
+                    ModelNews.find().then((memes) => {
+                    memes.forEach((document) => {
+                        list_Alldata_search.push(document.title_news_intro)   
+                    });    
+                    });
+            /* end search suggestion */
+            Product_Category.find({},function(err,dataBrand) {
+                if(!isEmpty(req.session.cart))
+                {
+                    var cart = new Cart(req.session.cart);
+                    res.render('GioHang', {products: cart.generateArray(), totalPrice: cart.totalPrice, dataBrand:dataBrand,list_Alldata_search:list_Alldata_search});
+                }
+                if(req.user){
+                    db.collection("Cart").findOne({customerId : String(req.user._id)}, function(err, data){
+                        if(data){
+                            var cart = new Cart(data);
+                            res.render('GioHang', {products: cart.generateArray(), totalPrice: data.totalPrice, dataBrand:dataBrand,list_Alldata_search:list_Alldata_search});
+                        }
+                        else{
+                            res.render('GioHang', {products: null, totalPrice: "0", dataBrand:dataBrand,list_Alldata_search:list_Alldata_search});
+                        }
+                        
+                    })  
+                }
+                else{
+                    res.render('GioHang', {products: null, totalPrice: "0", dataBrand:dataBrand,list_Alldata_search:list_Alldata_search});
+                }
+
+            })  
             
         });
         router.get(('/add-to-cart/:id'), isLoggedIn, function(req, res){
@@ -202,7 +219,7 @@ const { months } = require('moment-timezone');
                     var cart = new Cart(data);
                     cart.addByOne(productId);
                     req.session.cart = cart;
-                    var db = client.db('web');
+                    var db = client.db('MyDatabase');
                     db.collection("Cart").deleteOne({customerId: String(req.user._id)}, function(err){
                         db.collection("Cart").insertOne(req.session.cart, function(err){
                             if(err)
@@ -238,7 +255,10 @@ const { months } = require('moment-timezone');
                         }  
                         req.session.itemOrder = Items;
                         total = MakeDecimal(total)
-                        res.render('thanhtoan',{Items: Items, totalPrice:total})
+                        Product_Category.find({},function(err,dataBrand) {
+                            res.render('thanhtoan',{Items: Items, totalPrice:total, dataBrand: dataBrand})
+                        })
+                        
                     }   
                 })  
             }
@@ -254,14 +274,39 @@ const { months } = require('moment-timezone');
                         total += MakeInterger(cart.items[idItem].price) 
                         total = MakeDecimal(total)
                         req.session.itemOrder = Items;
-                        res.render('thanhtoan',{Items: Items, totalPrice: total})
+                        console.log(req.session.itemOrder)
+                        Product_Category.find({},function(err,dataBrand) {
+                            res.render('thanhtoan',{Items: Items, totalPrice: total, dataBrand:dataBrand})
+                        })
+                        
                     }   
                 })
             }
              
         });
         router.get(('/chitietdonhang/:id'), isLoggedIn, function(req, res){
-
+            id = req.params.id;
+            Order.findOne({_id:id}, function(err, data){
+                Product_Category.find({},function(err,dataBrand) {
+                    Feedback.findOne({id_order:req.params.id},function(err, feedback){
+                        console.log(req.params.id)
+                        console.log(feedback)
+                        if(feedback != null){
+                            var rating = feedback.rate;
+                            var feedbacks = feedback.feedbacks;
+                            res.render("chitietdonhang", {order : data, dataBrand:dataBrand, rating:rating, feedbacks:feedbacks})
+                        }
+                        else{
+                            var rating = "";
+                            var feedbacks = "";
+                            res.render("chitietdonhang", {order : data, dataBrand:dataBrand, rating:rating, feedbacks:feedbacks})
+                        }
+                        
+                    })
+                    
+                })
+                
+            })
         })
         router.post(('/chitietdonhang'), isLoggedIn, function(req, res){
             var date = new Date();
@@ -277,6 +322,7 @@ const { months } = require('moment-timezone');
                 totalPrice: req.body.totalPrice,
                 items: req.session.itemOrder,
                 completed: 0,
+                completed_feedback:0,
                 create_day: date.getDate()+"/" + month + "/"+date.getFullYear()
             }
             db.collection("Cart").findOne({customerId : String(req.user._id)}, function(er, data){
@@ -290,7 +336,12 @@ const { months } = require('moment-timezone');
                     db.collection("Cart").insertOne(req.session.cart, function(err){
                         req.session.itemOrder = {}
                         db.collection("Order").insertOne(insertJson, function(err, data){
-                            res.render('chitietdonhang', {order: data.ops[0]})
+                            Product_Category.find({},function(err,dataBrand) {
+                                var rating = "";
+                                var feedbacks = "";
+                                res.render("chitietdonhang", {order : data.ops[0], dataBrand:dataBrand, rating:rating, feedbacks:feedbacks})
+                            })
+                            
                         })
                     })
                 })
@@ -301,7 +352,12 @@ const { months } = require('moment-timezone');
             
         });
     })
+
+   
+
     module.exports = router;
+
+
     function isLoggedIn(req, res, next){
         if(req.isAuthenticated()){
         return next()

@@ -25,7 +25,7 @@
                    
                                   <div class="detail_Sanpham col-lg-4 col-md-4 col-sm-6 col-xs-12 mt-2 <%= dataProductHot[i-1].id_category %>" ><!--item-->
                                     <div class="">
-                                    <a class="a_anh"href="/detailProduct/<%= dataProductHot[i-1]._id %>"><img src="/image_Product/<%= dataProductHot[i-1].image[0]%>"class="img-fluid Anh_San_Pham" ></a>
+                                    <a class="a_anh"href="/detailPR/<%= dataProductHot[i-1]._id %>"><img src="/image_Product/<%= dataProductHot[i-1].image[0]%>"class="img-fluid Anh_San_Pham" ></a>
                                     <div class="div_name_product"> <p class="name_Product"><%= dataProductHot[i-1].product_name %></p></div>
                                     <div class="row index">
                                         <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9  container_Add_name">
@@ -91,6 +91,9 @@
 
 
 <!--footer-->
+<% for(i=0; i < list_Alldata_search.length;i++){ %>
+  <p class="list"><%= list_Alldata_search[i] %></p>
+<% } %>	
   <% include footer.ejs %> 
 <!--End footer-->
 

@@ -1,6 +1,6 @@
 <% include libaryHtml.ejs %>
   <% include header.ejs %>
-<div class="detail_cart">
+  <div class="detail_cart">
     <div class="container giohang">
         <div class="row">
             <div class="col-lg-5 col-md-4 col-sm-12 col-xs-12 cart_right">
@@ -8,44 +8,155 @@
                     <p class="info_cart_p">Thông tin tài khoản</p>
                     <hr>
                     <div>
-                        <form>
+                        <form action="/changeinfo" method="post">
                             <div class="row">
                                 <p class="col-4">Họ tên:</p>
                                 <div class="col-8">
-                                    <input class="form-control" value="<%= user.Name %>">
+                                    <input class="form-control" value="<%= user.Name %>" name="Name">
                                 </div>
                             </div>
                             <div class="row">
                                 <p class="col-4">Email:</p>
                                 <div class="col-8">
-                                    <input class="form-control" value="<%= user.Email %>">
+                                    <input class="form-control" value="<%= user.Email %>" name="Email">
                                 </div>
                             </div>
                             <div class="row">
                                 <p class="col-4">Số điện thoại:</p>
                                 <div class="col-8">
-                                    <input class="form-control" value="<%= user.Phone %>">
+                                    <input class="form-control" value="<%= user.Phone %>" name="Phone">
                                 </div>
                             </div>
                             <div class="row">
                                 <p class="col-4">Địa chỉ:</p>
                                 <div class="col-8">
-                                    <input class="form-control" value="<%= user.Address %>">
+                                    <input class="form-control" value="<%= user.Address %>" name="Address">
                                 </div>
-                            </div>
-                            <div class="row">
-                                <button style="padding: 5px 40px; font-size: 15px; border-radius: 2px;" type="submit" class="btn btn-primary btn-sm">Lưu</button>
                             </div>
                             
                         </form>
+                        <!-- Modal -->
+                        <div class="modal fade" id="changePasswordForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Đổi mật khẩu</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Mật khẩu cũ:</label>
+                                        <input class="form-control" type="password">
+                                      </div>
+                                      <div class="form-group">
+                                        <label for="exampleInputPassword1">Mật khẩu mới:</label>
+                                        <input type="password" class="form-control">
+                                      </div>
+                                      <div class="form-group">
+                                        <label for="exampleInputPassword1">Xác nhận mật khẩu mới:</label>
+                                        <input type="password" class="form-control">
+                                      </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                    <button type="button" class="btn btn-primary">Lưu lại</button>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>                                 
             </div>
             <div class="col-lg-7 col-md-8 col-sm-12 col-xs-12 cart_leftt ">
                     LỊCH SỬ MUA HÀNG
+                    <div class="list_order" style="margin-top: 5px;">
+                        <nav class="navbar navbar-expand-lg navbar-light s">
+                            <div class="collapse navbar-collapse" id="navbarNav">
+                              <ul class="navbar-nav" id="nav-listOrder">
+                                <li class="nav-item active" >
+                                  <a class="nav-link" id="showlistOrdersHandling" ><button style="border:none; background-color:white; padding:0">Đang thực hiện (<%= numberHandling%>)</button></a>
+                                </li>
+                                <li class="nav-item active" >
+                                  <a class="nav-link" id="showlistOrdersCompleted" ><button style="border:none; background-color:white; padding:0">Hoàn tất (<%= numberCompleted%>)</button></a>
+                                </li>
+                              </ul>
+                            </div>
+                          </nav>
+                        
+                        
+                    </div>
                     <div class="history_order">   
                         <hr>
                     </div>
+                    <div class="list_order"> <!--item-->
+                        
+                        <div id="listOrdersHandling">
+                            <div class="row ml-1">
+                                <div class="col-lg-4  col-md-4 col-sm-2 col-xs-4">Mã đơn hàng</div>
+                                <div class="col-lg-2  col-md-2 col-sm-2 col-xs-5">
+                                    <p class="time_donhang">Ngày đặt</p>
+                                </div>
+                                <div class="col-lg-3  col-md-3 col-sm-3 col-xs-3">
+                                   Thành tiền
+                                    
+                                </div>
+                                
+                                
+                            </div>
+                            <hr>
+                            <% ordersHandling.forEach(function(order){ %>
+                                <a class="detailOrder">
+                                    <div class="row ml-1">
+                                        <a href="chitietdonhang/<%= order._id%>" style="color: black" class="col-lg-4  col-md-4 col-sm-2 col-xs-4"><%= order._id %></a>
+                                        <a href="chitietdonhang/<%= order._id%>" style="color: black" class="col-lg-2  col-md-2 col-sm-2 col-xs-5">
+                                            <p class="time_donhang"><%= order.create_day %></p>
+                                        </a>
+                                        <a href="chitietdonhang/<%= order._id%>" style="color: black" class="col-lg-3  col-md-3 col-sm-3 col-xs-3">
+                                            <%= order.totalPrice %>
+                                        </a> 
+                                    </div>
+                                </a>
+                            <% }) %>
+                        </div>
+                        <div id="listOrdersCompleted" style="display: none;">
+                            <div class="row ml-1">
+                                <div class="col-lg-4  col-md-4 col-sm-2 col-xs-4">Mã đơn hàng</div>
+                                <div class="col-lg-2  col-md-2 col-sm-2 col-xs-5">
+                                    <p class="time_donhang">Ngày đặt</p>
+                                </div>
+                                <div class="col-lg-3  col-md-3 col-sm-3 col-xs-3">
+                                   Thành tiền
+                                    
+                                </div>
+                              
+                                
+                            </div>
+                            <hr>
+                            <% ordersCompleted.forEach(function(order){ %>
+                                <a class="detailOrder" >
+                                    <div class="row ml-1">
+                                        <a style="color: black" class="col-lg-4  col-md-4 col-sm-2 col-xs-4" href="chitietdonhang/<%= order._id%>"><%= order._id %></a>
+                                        <a style="color: black" href="chitietdonhang/<%= order._id%>" class="col-lg-2  col-md-2 col-sm-2 col-xs-5">
+                                            <p class="time_donhang"><%= order.create_day %></p>
+                                        </a>
+                                        <a style="color: black" href="chitietdonhang/<%= order._id%>" class="col-lg-3  col-md-3 col-sm-3 col-xs-3">
+                                            <%= order.totalPrice %>
+                                        </a> 
+                                        
+
+                                       
+                                        
+                                    </div>
+                                </a>
+                            <% }) %>
+                            
+                            
+                        </div>
+                        
+                </div>
             </div>
           </div>
     </div>

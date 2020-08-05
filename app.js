@@ -12,7 +12,8 @@ var authRouter = require('./routes/auth');// chung thuc facebook google
 var diemtin=require('./routes/diemtin'); /*noibat ở đây chính là file  diemtin.js ở Router*/
 var adminNews=require('./routes/adminNews'); /*adminNews ở đây chính là file adminNews.js ở Router*/
 var noibat=require('./routes/noibat'); /*noibat ở đây chính là file  noibat.js ở Router*/
-// var brandAndProduct=require('./routes/brandAndProduct'); /*brandAndProduct  ở đây chính là file  brandAndProduct.js ở Router*/
+var search=require('./routes/search'); /*search ở đây chính là file  search.js ở Router*/
+var brandAndproduct=require('./routes/brandAndproduct'); /*brandAndproduct ở đây chính là file  brandAndproduct.js ở Router*/
 
 var giamgia=require('./routes/giamgia'); /*noibat ở đây chính là file  noibat.js ở Router*/
 var session = require('express-session')
@@ -22,7 +23,8 @@ var flash = require('connect-flash');
 var MongoStore = require('connect-mongo')(session)
 //connect DB
 mongoose.set("useNewUrlParser", true);
-mongoose.connect('mongodb://localhost:27017/web')
+//database
+mongoose.connect('mongodb://localhost:27017/MyDatabase')
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error!"));
 db.once("open", function(){
@@ -77,7 +79,9 @@ app.use('',diemtin); /*diemtin chính là biến diemtin bên trên */
 app.use('',adminNews); /*adminNews chính là biến adminNews bên trên */
 app.use('', noibat); /* noibat chính là biến noibat bên trên */
 app.use('',giamgia); /*giamgia chính là biến giamgia bên trên */
-// app.use('',brandAndProduct); /*brandAndProduct chính là biến brandAndProduct bên trên */
+app.use('', search); /* search chính là biến search bên trên */
+app.use('',brandAndproduct);/*brandAndproduct chính là biến brandAndproduct bên trên */
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

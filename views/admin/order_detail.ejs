@@ -1,0 +1,80 @@
+<% include headerAdmin.ejs %> 
+<div id="layoutSidenav_content">
+    <main>
+        <div class="container-fluid">
+            <h1 class="mt-4">Chi tiết đơn hàng</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+                <li class="breadcrumb-item active"><a href="/admin/donhang">Danh sách đơn hàng</a></li>
+            </ol>
+            <% order.items.forEach(function(or){ %>        
+            <div class="card mb-4">
+                <div id="productDisplay" class="list_item"> <!--item-->
+                    <div class="row">
+                        <div class="col-lg-2  col-md-2 col-sm-2 col-xs-2"><img src="/image_Product/<%= or.item.image[0]%>" style="width:80px;height:80px;margin-left:50px" ></div>
+                        <div class="col-lg-2  col-md-4 col-sm-2 col-xs-4 name_item"><%= or.item.product_name %></div>
+                        <div class="col-lg-2  col-md-2 col-sm-2 col-xs-5 cover_cost_del">
+                            <p class="cost_item"><%= or.item.price %> VND</p>
+                        </div>
+                        <div class="col-lg-3  col-md-3 col-sm-3 col-xs-3">
+                            <p class="cost_item">X <%= or.qty %></p>
+                        </div>
+                        <div id="priceItem" class="col-lg-2  col-md-4 col-sm-4 col-xs-4 name_item"><%= or.price %> VND</div>
+                    </div>
+                    
+                </div>    
+            </div>
+            <% }) %>
+            <div class="thongtindiachi" style="margin-left: 100px">
+                <h3>Thông tin thanh toán</h3>
+                <p>Họ tên: <%= order.name_customer %></p>
+                <p>Địa chỉ: <%= order.address %></p>
+                <p>Số điện thoại: <%= order.phone %></p>
+                <p>Email: <%= order.email %></p>
+                <p>Tổng tiền: <%= order.totalPrice %></p>
+                <p>Ghi chú: <%= order.note %></p>
+
+                <% if(order.completed == 0){ %>
+                    <form method="GET" action="/admin/completeOrder/<%= order.id%>">
+                        <button type="submit" style="background-color: #343a40; color: white; margin-top: 10px;" class="btn">Xác nhận đơn hàng</button>
+                    </form>
+                <% } else{ %>
+                    <button type="submit" style="background-color: #343a40; color: white; margin-top: 10px;" class="btn">Đơn hãng đã xác nhận</button>
+                <% } %>
+                <hr>
+                <p>Đánh giá của khánh hàng:</p>
+                <p>Nhận xét: <%= feedbacks %></p>
+                <label for="rating" style="width:100%">Mức độ hài lòng:</label>
+                <div id="rating">
+                    <% for (var i = 10; i > 0; i--) {%>
+                        <% if(i/2 == rating){ %>
+                            <input type="radio" id="star5" name="rating" value="<%= i/2%>" checked/>
+                        <% } else{ %>
+                            <input type="radio" id="star5" name="rating" value="<%= i/2%>"/>
+                        <% } %>
+                                                        
+                        <% if(i==1||i==3||i==5||i==7||i==9){ %>
+                            <label class = "half" for="star5" ></label>
+                        <% } else {%>
+                            <label class = "full" for="star5" ></label>
+                        <% } %>
+                                                        
+                    <% } %>
+                                                    
+                </div>
+                
+            </div>
+            
+            
+        </div>
+    </main>
+
+    
+    <footer class="py-4 bg-light mt-auto ml-4">
+        <div class="container-fluid">
+            <p>Được phát triển bởi D2HPhone team</p>
+        </div>
+    </footer>
+</div>
+</body>
+</html>

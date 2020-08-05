@@ -1,0 +1,70 @@
+<% include headerAdmin.ejs %> 
+<div id="layoutSidenav_content">
+    <main>
+        <div class="container-fluid">
+            <h1 class="mt-4">Danh sách sản phẩm</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+                <li class="breadcrumb-item active">Danh sách đơn hàng</li>
+            </ol>
+        
+            <div class="card mb-4">
+                
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Mã đơn hàng</th>
+                                    <th>Ngày tạo</th>
+                                    <th>Trạng thái</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>Mã đơn hàng</th>
+                                    <th>Ngày tạo</th>
+                                    <th>Trạng thái</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </tfoot>
+                            <tbody>
+                                <%  orders.forEach(function(order){ %>
+                                    <tr>
+                                        <td><%= order.id %></td>
+                                        <td><%= order.create_day %></td>
+                                        <% if(order.completed == 0) {%>
+                                            <td>Chưa hoàn thành</td>
+                                        <%} else {%>
+                                            <td>Hoàn thành</td>
+                                        <% } %>
+                                        <td>
+                                            <a class="btn btn btn-outline-primary" href="/admin/donhang/<%=order._id %> ">Xem</a>
+                                        </td>
+                                    </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script type="text/javascript"> //hàm này có chức năng confirm thông tin bạn muốn xóa
+        function xoahaykhong(tinnhan){
+            if(window.confirm(tinnhan)==true){
+                return true;
+            }
+            return false;
+        }
+    </script>
+    <footer class="py-4 bg-light mt-auto ml-4">
+        <div class="container-fluid">
+            <p>Được phát triển bởi D2HPhone team</p>
+        </div>
+    </footer>
+</div>
+</body>
+</html>

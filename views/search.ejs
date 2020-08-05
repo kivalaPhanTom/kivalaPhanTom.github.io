@@ -1,0 +1,60 @@
+<% include libaryHtml.ejs %>
+  <% include header.ejs %>
+
+  <div class="container mt-5 ">
+   
+
+    <h4 class="resultSearch">Kết quả tìm kiếm cho từ khóa: <%=  regex %> </h4>
+    <hr>
+    <% if( notFind !== null) {%>
+        <h3 class="notFind mt-3"><%= notFind %></h3>
+        <% } %>
+        <div class="row">
+    <% for( i=0; i< dataProduct.length; i++ ){ %>
+        <div class="resutl_item_search mb-2 col-lg-4 col-md-4 col-sm-6 col-xs-12">
+            <div class="row" >
+                <div class="col-12">
+                    <a class="" href="/detailPR/<%= dataProduct[i]._id %>"><img src="/image_Product/<%=  dataProduct[i].image[0]%>" width="270px" height="270px" class=" "></a>
+                </div>
+                <div class="col-12">
+                    <p class=" text-center"><%= dataProduct[i].product_name %></p>
+                </div>
+            </div>   
+      </div>
+    <% } %>
+    <% for( j=0; j< dataNews.length; j++ ){ %>
+      <div class="resutl_item_search mb-2  col-lg-4 col-md-4 col-sm-6 col-xs-12">
+          <div class="" >
+              <div class="">
+                  <a href="/detail/<%= dataNews[j]._id %> "><img src="/image_TinTuc/<%= dataNews[j].image_News[0] %>" width="270px" height="270px"class="" ></a>
+              </div>
+              <div class="ml-2">
+                  <p class="text-center"><%= dataNews[j].title_news_intro %> </p>
+              </div>
+          </div>   
+    </div>
+  <% } %>
+  </div>
+
+    
+   <div style="text-align:center "class="">
+      <button style="justify-content: center; " type="button" class="btn btn-info" id="loadMore">Load more <i class="fas fa-angle-double-down"></i></button>
+    
+      <button  style="justify-content: center;" type="button" class="btn  btn-secondary" id="showLess">Show less <i class="fas fa-angle-double-up"></i></button>
+   </div>
+
+  </div>
+
+
+  <div class="empty_search diableDiv">
+
+</div>
+  <!--footer-->
+  <% for(i=0; i < list_Alldata_search.length;i++){ %>
+    <p class="list"><%= list_Alldata_search[i] %></p>
+  <% } %>	
+  <% include footer.ejs %> 
+<!--End footer-->
+
+  </body>
+</html>

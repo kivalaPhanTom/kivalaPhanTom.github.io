@@ -1,16 +1,118 @@
 
 $(document).ready(function(){
+
+       
+  /* -------------Xử lý Chức năng Search Suggestion---------------  */
+function KhongDau(str){ //hàm chuyển chữ có dẫu thành ko dấu
+	if (typeof str != 'string')
+		return null;
+
+	str = str.replace(/(á|à|ả|ã|ạ|ă|ắ|ằ|ẳ|ẵ|ặ|â|ấ|ầ|ẩ|ẫ|ậ)/g, 'a');
+	str = str.replace(/(A|Á|À|Ả|Ã|Ạ|Ă|Ắ|Ằ|Ẳ|Ẵ|Ặ|Â|Ấ|Ầ|Ẩ|Ẫ|Ậ)/g, 'A');
+	str = str.replace(/đ/g, 'd');
+	str = str.replace(/Đ/g, 'D');
+	str = str.replace(/(é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ)/g, 'e');
+	str = str.replace(/(É|È|Ẻ|Ẽ|Ẹ|Ê|Ế|Ề|Ể|Ễ|Ệ)/g, 'E');
+	str = str.replace(/(í|ì|ỉ|ĩ|ị)/g, 'i');
+	str = str.replace(/(Í|Ì|Ỉ|Ĩ|Ị)/g, 'I');
+	str = str.replace(/(ó|ò|ỏ|õ|ọ|ô|ố|ồ|ổ|ỗ|ộ|ơ|ớ|ờ|ở|ỡ|ợ)/g, 'o');
+	str = str.replace(/(Ó|Ò|Ỏ|Õ|Ọ|Ô|Ố|Ồ|Ổ|Ỗ|Ộ|Ơ|Ớ|Ờ|Ở|Ỡ|Ợ)/g, 'O');
+	str = str.replace(/(ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự)/g, 'u');
+	str = str.replace(/(Ú|Ù|Ủ|Ũ|Ụ|Ư|Ứ|Ừ|Ử|Ữ|Ự)/g, 'U');
+	str = str.replace(/(ý|ỳ|ỷ|ỹ|ỵ)/g, 'y');
+	str = str.replace(/(Ý|Ỳ|Ỷ|Ỹ|Ỵ)/g, 'Y');
+
+	str = str.replace(/[^a-zA-Z0-9_-]/g, '-');
+
+	while (str.length > 0 && (/--/g).test(str)){
+		str = str.replace(/--/g, '-');
+	}
+	return str.toLowerCase();
+};
+var data_search_sugesstion = document.getElementsByClassName("list");
+var data_search_sugesstion = jQuery.makeArray(data_search_sugesstion);
+data_search_sugesstion.reverse();
+data_search_sugesstion = data_search_sugesstion.map(data => data.innerHTML); //đây là dữ liệu lấy về dưới dạng mảng
+const handleSource = ({ term }, response) => {  //biến term này do jquery định nghĩa, là biến lấy dữ liệu khi nhập input search
+    response(data_search_sugesstion.filter(item => {
+        const comparedWith = KhongDau(item); //chuyển dữ liệu trong mảng lấy được thành chữ không dấu
+        const query = KhongDau(term); //chuyển dữ liệu nhập trong input search về không dấu lun
+        return comparedWith.indexOf(query) !== -1; // so sánh 2 biến comparedWith và query xem có khớp nhau ko, khớp mới đc return về
+    }))
+}
+
+$("#search-input").autocomplete({ /* sử dụng jquery autocomplete để tạo chức năng search sugesstion */
+    autoFocus: true,
+    source:  handleSource //đưa dữ liệu đã được xử lý bên trên vào
+}).keydown(function(event){
+    if(event.keyCode == 13) {
+      if($("#search-input").val().length==0) {+
+          event.preventDefault();
+          return false;
+
+      }
+       $("#submit").click();  /*tự động click button khi chọn option ở ô search*/
+       console.log("đã nhấn enter")
+
+    }
+ });
+
+ $( "#search-input" ).autocomplete(   /* xử lý sự kiện khi nhấn vào từng mục gợi ý của search thì mới chạy*/
+    {
+         source: handleSource,
+         select: function(event, ui) {
+            $("#search-input").val(ui.item.value);
+            $("#submit").click();
+  }
+    })
+/*Kết thúc Xử lý Chức năng Search Suggestion  */
+
+    /* -------------chức năng show less và show more ở trang tìm kiếm ------------*/
+    size_li = $(".resutl_item_search").size();
+    console.log(" size_li:"+ size_li)
+    x=9;
+    if(x > size_li){
+        $('#loadMore').hide();
+    }
+    if(x == size_li){
+        $('#loadMore').hide();
+    }
+    $('.resutl_item_search:lt('+x+')').show(300);
+    $('#loadMore').click(function () {
+        x= (x+6 <= size_li) ? x+6 : size_li;
+        $('.resutl_item_search:lt('+x+')').show(300);
+        $('#showLess').show();
+        if(x == size_li){
+            $('#loadMore').hide(300);
+        }
+       
+        
+
+
+    $('#showLess').click(function () {
+            x=(x-6<0) ? 9 : x-6;
+            $('.resutl_item_search').not(':lt('+x+')').hide(300);
+            $('#loadMore').show();
+            $('#showLess').show();
+           if(x == 9){
+               $('#showLess').hide();
+           }
+        });
+    })
+   
+    /* End chức năng show less và show more ở trang tìm kiếm */
+
     
+        /* ---------Chức năng ẩn hiện comment và phản hồi khi nhấn nút phản hồi -----------*/
+        $('.comment-reply-btn').click(function(event){
+            console.log("đã click");
+            event.preventDefault();
+            $(this).parent().next(".Reply_Comment").fadeToggle();
+        })
+     /* -----End----Chức năng ẩn hiện comment và phản hồi khi nhấn nút phản hồi -----------*/
+    $(".carousel-inner .carousel-item:nth-child(1)").addClass('active');/* xử lý cho slide boostrap ở trang chủ */
+
     /*-------------- xử lý cho slide */
-    $("#content-slider").lightSlider({
-        
-        auto:true,
-        adaptiveHeight:true,
-        item:1,
-        slideMargin:0,
-        loop:true
-        
-    });
     
     $('#image-gallery').lightSlider({
         gallery:true,
@@ -41,18 +143,40 @@ $('.on_top').click(function(){
 }); 
 
 //end xử lý nút kéo lên trang đầu
+var numberProduct=$(".checkbox_cart").length
+console.log("mảng:"+numberProduct)
 
+function handleSubmiButton(){
+
+  
+    if ($('.checkbox:checked').length > 0){
+         
+        $('.btn_confirm_cart').addClass('btn_visible_submit');
+    }
+    else{
+        $('.btn_confirm_cart').removeClass('btn_visible_submit');
+      
+    }
+    if ($('.checkbox:checked').length == numberProduct){
+        $(".selectall").prop('checked', true);
+    } else {
+        $(".selectall").removeAttr("checked");
+    }
+     
+}
 
     new WOW().init(); /*------------ kích hoạt wow.js*/
 
 
     //----------hàm xử lí khi click vào ô checkbox chọn tất cả
+    var checkAll=0;
     $('.selectall').click(function() {
         var wrap = $("#listItem");
         wrap.empty();
         
         if ($(this).is(':checked')) {
             $('input:checkbox').prop('checked', true);
+            checkAll= $('input:checkbox').length-1
             var total = 0;
             $('.checkbox:checked').each(function() {
                 total += parseFloat(MakeInterger($(this).attr('data-price')));
@@ -71,6 +195,7 @@ $('.on_top').click(function(){
             wrap.empty()
             $('.iff1').text("0 VND")
         }
+        handleSubmiButton();
         
         
     });
@@ -107,10 +232,121 @@ $('.on_top').click(function(){
     }
       
 });
+$('#btnChangeInfo').click(function(){
+    if (confirm('Bạn có muốn tiếp tục không?')) {
+        return true;
+    } else {
+        return false;
+    }
 
+})
+//get code to reset pasword
+$("#btn_getReset").click(function(){
+    var abc = $("#disNoti");
+    abc.empty();
+    var email = $("#inputEmailReset").val()
+    console.log(email)
+    $.ajax({
+        type: 'GET',
+        url: '/users/getkeyreset/'+$("#inputEmailReset").val(),
+    })
+    .done(function(data){
+        if(data == "success"){
+            
+            $("#btn_getReset").hide()
+            $("#formResetPass").hide();
+            $('#formResetPass2').show()
+            var wrap = $("#disNoti");
+            var rowHtml = $(document.createElement('div')).addClass("alert alert-success alert-dismissible fade show").attr("role","alert").appendTo(wrap);
+            $(document.createElement('p')).text("Xác nhận email thành công, vui lòng kiểm tra hộp thư!").appendTo(rowHtml);
+            var btn = $(document.createElement('button')).addClass("close").attr("type","button").attr("data-dismiss","alert").attr("aria-label","Close").appendTo(rowHtml);
+            $(document.createElement('span')).attr("aria-hidden","true").text("x").appendTo(btn);
+        }
+        else{
+            var wrap = $("#disNoti");
+            var rowHtml = $(document.createElement('div')).addClass("alert alert-warning alert-dismissible fade show").attr("role","alert").appendTo(wrap);
+            $(document.createElement('p')).text(data).appendTo(rowHtml);
 
-/* End Chức năng lọc sản phẩm theo tên hãng */
+            var btn = $(document.createElement('button')).addClass("close").attr("type","button").attr("data-dismiss","alert").attr("aria-label","Close").appendTo(rowHtml);
+            $(document.createElement('span')).attr("aria-hidden","true").text("x").appendTo(btn);
+        }
+    })
+})
+//vaify code to reset
+$('#btn_verify').click(function(){
+    var abc = $("#disNoti");
+    abc.empty();
+    var code = $("#inputCodeReset").val()
+    var email = $("#inputEmailReset").val()
+    url = '/users/verifyCode/'+$("#inputEmailReset").val()+'/'+$("#inputCodeReset").val();
+    console.log(email)
+    $.ajax({
+        type: 'GET',
+        url: '/users/verifyCode/'+$("#inputEmailReset").val()+'/'+$("#inputCodeReset").val(),
+    })
+    .done(function(data){
+        if(data == "success")
+        {
+            alert(data)
+            $('#formResetPass2').hide()
+            $('#formResetPass3').show()
+            $('#btn_resetPass').show()
+        }
+        else{
+            var wrap = $("#disNoti");
+            var rowHtml = $(document.createElement('div')).addClass("alert alert-warning alert-dismissible fade show").attr("role","alert").appendTo(wrap);
+            $(document.createElement('p')).text(data).appendTo(rowHtml);
 
+            var btn = $(document.createElement('button')).addClass("close").attr("type","button").attr("data-dismiss","alert").attr("aria-label","Close").appendTo(rowHtml);
+            $(document.createElement('span')).attr("aria-hidden","true").text("x").appendTo(btn);
+        }
+    })
+})
+//reset pass
+$("#btn_resetPass").click(function(){
+    var pass = $("#pass").val()
+    var pass1 = $("#pass1").val()
+    $.ajax({
+        type: 'POST',
+        url: '/users/resetPass',
+        data: JSON.stringify({
+            Password: $("#pass").val(),
+            Password1: $("#pass1").val(),
+            Email: $("#inputEmailReset").val(),
+        }),
+        contentType: "application/json",
+    })
+    .done(function(data){
+        if(data == "Mật khẩu không khớp!")
+        {
+            var wrap = $("#disNoti");
+            var rowHtml = $(document.createElement('div')).addClass("alert alert-warning alert-dismissible fade show").attr("role","alert").appendTo(wrap);
+            $(document.createElement('p')).text(data).appendTo(rowHtml);
+
+            var btn = $(document.createElement('button')).addClass("close").attr("type","button").attr("data-dismiss","alert").attr("aria-label","Close").appendTo(rowHtml);
+            $(document.createElement('span')).attr("aria-hidden","true").text("x").appendTo(btn);
+        }
+        else{
+            window.location.replace(data);
+        }
+    })
+})
+// hien thi list don hang hoan thanh va chua hoan thanh
+
+$('#nav-listOrder li').click(function(e) { 
+    if($(this).find("a").attr('id') === "showlistOrdersHandling"){
+
+        console.log("Hien thi don hanh chua hoan thanh")
+        $('#listOrdersHandling').show()
+        $('#listOrdersCompleted').hide()
+    }
+    else{
+
+        console.log("Hien thi don hanh hoan thanh")
+        $('#listOrdersHandling').hide()
+        $('#listOrdersCompleted').show()
+    }
+});
 /* ------------tính năng xử xí footer xuất hiện cho hợp lý */
 var vitri = $('.footer').offset();
   if(vitri.top <= 600){
@@ -146,6 +382,7 @@ var vitri = $('.footer').offset();
             var price = $(document.createElement('p')).addClass("col-6").text($(this).attr('data-price')+" VND").appendTo(rowHtml);
         });
         $('.iff1').text(MakeDecimal(total)+" VND")
+        handleSubmiButton();
     });
     $("#btnComfirm").click(function(){
         console.log("Comfirm")
@@ -169,6 +406,7 @@ var vitri = $('.footer').offset();
     $("#Sum_cost1 span").text(MakeDecimal(MakeInterger(part[0])+ MakeInterger(part1[0])) + " VND")
 
 })
+
 $(document).on('click', '.number-spinner button', function(e) {
     var btn = $(this),
       oldValue = btn.closest('.number-spinner').find('input').val().trim(),
@@ -182,7 +420,7 @@ $(document).on('click', '.number-spinner button', function(e) {
         console.log($(this).attr('idProduct'))
         $.ajax({
             type: 'GET',
-            url: 'http://localhost:3000/addByOne/'+$(this).attr('idProduct'),
+            url: '/addByOne/'+$(this).attr('idProduct'),
         })
         .done(function(data){
             var total = 0;
@@ -216,7 +454,7 @@ $(document).on('click', '.number-spinner button', function(e) {
         console.log($(this).attr('idProduct'))
         $.ajax({
             type: 'GET',
-            url: 'http://localhost:3000/reduceByOne/'+$(this).attr('idProduct'),
+            url: '/reduceByOne/'+$(this).attr('idProduct'),
         })
         .done(function(data){
             var arr = [];

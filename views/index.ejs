@@ -9,47 +9,69 @@
 					<!--Begin Slide-->
 <div class="container text-center mt-3 col-lg-6 col-md-6 col-sm-12 col-xs-12 ">
 	<!--mt-3 để cách ra 1 đoạn-->
-	<h3 class="Top">Sản phẩm nổi bật </h3>
-	<div class="item ">
+	<h3 class="Top">Sản phẩm mới nhất </h3>
+	
+	
+		
 		<% if (dataProduct.length <6) { %>
 		<ul id="content-slider" class="content-slider ">
-		
+		        
 				<%  for (var i = dataProduct.length; i > 0; i--) { %> <!--duyệt mảng product-->
 					<% if(dataProduct[i-1].Top == 'Có'){ %> <!--Kiểm tra xem sản phẩm có hot hay không-->
-						<li><a href="">
-							<div class="thumbnail ">
-								<a href="/detailProduct/<%= dataProduct[i-1]._id %>"><img src="/image_Product/<%= dataProduct[i-1].image[0]%>"class="img_slide" alt="" /></a>
-								<div class="caption">
-									<h4 th:text="${game.title}" >
-									<p th:text="${game.shortDescription}" >
-									<a href="/detailProduct/<%= dataProduct[i-1]._id %>" class="btn btn-info btn-xs btn-block infoitem" role="button"><%=  dataProduct[i-1].product_name %></a>
-	
+						<div id="carouselExampleCaptions" class="carousel slide content-slider" data-ride="carousel"  ><!--slide-->
+							<div class="carousel-inner" style="border-radius:10px; border:2px solid #343a40cf; background-color: whitesmoke;">
+								<%  for (var i = dataProduct.length; i > 0; i--) { %> <!--duyệt mảng product-->
+									<% if( dataProduct[i-1].Top == 'Có'){ %>
+							  <div class="carousel-item ">
+								<a href="/detailPR/<%= dataProduct[i-1]._id %>"><img src="/image_Product/<%= dataProduct[i-1].image[0]%>" class="d-block w-100 img_slider" alt="..."></a>
+								<div class="carousel-caption d-md-block">
+									<a class="name_slide_intro" href="/detailPR/<%= dataProduct[i-1]._id %>"><h5 style="color: black;background-color: aliceblue; border-radius:5px; padding:2% 0px; opacity: 0.8; font-size:100%;"><%=  dataProduct[i-1].product_name %></h5></a>
 								</div>
-							</div>
-						</La>
-					</li>			
+							  </div>
+							  <% }  %>   
+							  <% } %>	
+							<a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+							  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+							  <span class="sr-only">Previous</span>
+							</a>
+							<a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+							  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+							  <span class="sr-only">Next</span>
+							</a>
+						  </div>
+						</div><!-- End slide-->
 					<% } %>
 				<% } %>	
 				<% } else { %>
 					<%  for (var i = dataProduct.length; i > dataProduct.length-6; i--) { %> <!--duyệt mảng product-->
 						<% if(dataProduct[i-1].Top == 'Có'){ %> <!--Kiểm tra xem sản phẩm có hot hay không-->
-							<li><a href="">
-								<div class="thumbnail ">
-									<a href="/detailProduct/<%= dataProduct[i-1]._id %>"><img src="/image_Product/<%= dataProduct[i-1].image[0]%>"class="img_slide" alt="" /></a>
-									<div class="caption">
-										<h4 th:text="${game.title}" >
-										<p th:text="${game.shortDescription}" >
-										<a href="/detailProduct/<%= dataProduct[i-1]._id %>" class="btn btn-info btn-xs btn-block infoitem" role="button"><%=  dataProduct[i-1].product_name %></a>
-		
+							<div id="carouselExampleCaptions" class="carousel slide content-slider" data-ride="carousel"  ><!--slide-->
+								<div class="carousel-inner" style="border-radius:10px; border:2px solid #343a40cf; background-color: whitesmoke;">
+									<%  for (var i = dataProduct.length; i > 0; i--) { %> <!--duyệt mảng product-->
+										<% if(dataProduct[i-1].Top == 'Có'){ %>
+								  <div class="carousel-item ">
+									<a href="/detailPR/<%= dataProduct[i-1]._id %>"><img src="/image_Product/<%= dataProduct[i-1].image[0]%>" class="d-block w-100 img_slider" alt="..."></a>
+									<div class="carousel-caption d-md-block">
+										<a class="name_slide_intro"href="/detailPR/<%= dataProduct[i-1]._id %>"><h5 style="color: black;background-color: aliceblue; border-radius:5px; padding:2% 0px; opacity: 0.8; font-size:100%;"><%=  dataProduct[i-1].product_name %></h5></a>
 									</div>
-								</div>
-							</a>
-						</li>			
+								  </div>
+								  <% }  %>   
+								  <% } %>	
+								<a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+								  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+								  <span class="sr-only">Previous</span>
+								</a>
+								<a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+								  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+								  <span class="sr-only">Next</span>
+								</a>
+							  </div>
+							</div><!-- End slide-->
 						<% } %>
 					<% } %>	
 		</ul>
 		<% } %>
-	</div>
+	
 </div>
 <!--End Slide-->
 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 chaomung">
@@ -79,7 +101,7 @@
 				<%  for (var i =dataProduct.length; i > 0; i--) { %> <!--duyệt mảng product-->
 					<div class="detail_Sanpham col-lg-4 col-md-4 col-sm-6 col-xs-12 mt-2 <%= dataProduct[i-1].id_category %>" ><!--item-->
 						<div class="">
-								<a class="a_anh"href="/detailProduct/<%= dataProduct[i-1]._id %>"><img src="/image_Product/<%= dataProduct[i-1].image[0]%>"class="img-fluid Anh_San_Pham" ></a>
+								<a class="a_anh"href="/detailPR/<%= dataProduct[i-1]._id %>"><img src="/image_Product/<%= dataProduct[i-1].image[0]%>"class="img-fluid Anh_San_Pham" ></a>
 								<div class="div_name_product"><p class="name_Product"><%= dataProduct[i-1].product_name %></p></div>
 								<div class="row index">
 									<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 container_Add_name">
@@ -95,7 +117,7 @@
 											<% }  %>  
 										</div>
 										<div class="Add_to_cart col-lg-3 col-md-3 col-sm-3 col-xs-3">
-											  <a ><i class="fas fa-cart-plus"></i></a>
+											  <a href="/add-to-cart/<%= dataProduct[i-1].id%>" ><i class="fas fa-cart-plus"></i></a>
 										</div>
 									</div>
 								</div>
@@ -105,7 +127,7 @@
 					<%  for (var i =dataProduct.length; i > dataProduct.length-6; i--) { %> <!--duyệt mảng product-->
 						<div class="detail_Sanpham col-lg-4 col-md-4 col-sm-6 col-xs-12 mt-2 <%= dataProduct[i-1].id_category %>" ><!--item-->
 							<div class="">
-									<a class="a_anh"href="/detailProduct/<%= dataProduct[i-1]._id %>"><img src="/image_Product/<%= dataProduct[i-1].image[0]%>"class="img-fluid Anh_San_Pham" ></a>
+									<a class="a_anh"href="/detailPR/<%= dataProduct[i-1]._id %>"><img src="/image_Product/<%= dataProduct[i-1].image[0]%>"class="img-fluid Anh_San_Pham" ></a>
 									 <div class="div_name_product">	<p class="name_Product"><%= dataProduct[i-1].product_name %></p></div>
 									<div class="row index">
 										<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 container_Add_name">
@@ -121,7 +143,7 @@
 												<% }  %>  
 											</div>
 											<div class="Add_to_cart col-lg-3 col-md-3 col-sm-3 col-xs-3">
-												  <a href=""><i class="fas fa-cart-plus"></i></a>
+												  <a href="/add-to-cart/<%= dataProduct[i-1].id%>"><i class="fas fa-cart-plus"></i></a>
 											</div>
 										</div>
 									</div>
@@ -151,7 +173,7 @@
 						<% if( dataProduct[i-1].promotion_price !== ''){ %> <!--Lọc ra sản phẩm có giảm giá-->
 								<div class="detail_Sanpham col-lg-4 col-md-4 col-sm-6 col-xs-12 mt-2 <%=  dataProduct[i-1].id_category %>" ><!--item-->
 									<div class="">
-										<a class="a_anh" href="/detailGiamGia/<%=  dataProduct[i-1]._id %>"><img src="/image_Product/<%=  dataProduct[i-1].image[0]%>"class="img-fluid Anh_San_Pham" ></a>
+										<a class="a_anh" href="/detailPR/<%=  dataProduct[i-1]._id %>"><img src="/image_Product/<%=  dataProduct[i-1].image[0]%>"class="img-fluid Anh_San_Pham" ></a>
 										<div class="div_name_product">	<p class="name_Product"><%=  dataProduct[i-1].product_name %></p>	</div>
 										<div class="row index">
 											<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 container_Add_name">
@@ -163,7 +185,7 @@
 												</div>	
 											</div>
 											<div class="Add_to_cart col-lg-3 col-md-3 col-sm-3 col-xs-3">
-													<a href=""><i class="fas fa-cart-plus"></i></a>
+													<a href="/add-to-cart/<%= dataProduct[i-1].id%>"><i class="fas fa-cart-plus"></i></a>
 											</div>
 										</div>
 									</div>
@@ -176,7 +198,7 @@
 						<% if( dataProduct[i-1].promotion_price !== ''){ %> <!--Lọc ra sản phẩm có giảm giá-->
 								<div class="detail_Sanpham col-lg-4 col-md-4 col-sm-6 col-xs-12 mt-2 <%=  dataProduct[i-1].id_category %>" ><!--item-->
 									<div class="">
-										<a class="a_anh" href="/detailGiamGia/<%=  dataProduct[i-1]._id %>"><img src="/image_Product/<%=  dataProduct[i-1].image[0]%>"class="img-fluid Anh_San_Pham" ></a>
+										<a class="a_anh" href="/detailPR/<%=  dataProduct[i-1]._id %>"><img src="/image_Product/<%=  dataProduct[i-1].image[0]%>"class="img-fluid Anh_San_Pham" ></a>
 										<div class="div_name_product"><p class="name_Product"><%=  dataProduct[i-1].product_name %></p></div>
 										<div class="row index">
 											<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 container_Add_name">
@@ -188,7 +210,7 @@
 												</div>	
 											</div>
 											<div class="Add_to_cart col-lg-3 col-md-3 col-sm-3 col-xs-3">
-													<a href=""><i class="fas fa-cart-plus"></i></a>
+													<a href="/add-to-cart/<%= dataProduct[i-1].id%>"><i class="fas fa-cart-plus"></i></a>
 											</div>
 										</div>
 									</div>
@@ -243,12 +265,16 @@
 	</div>
 </div>
 </div>
+
 <!--End Phần Điểm Tin-->
 <div class="empty_search diableDiv">
 
 </div>
 <!--End Phần Điểm Tin-->
 <!--End Part2-->
+<% for(i=0; i < list_Alldata_search.length;i++){ %>
+	<p class="list"><%= list_Alldata_search[i] %></p>
+<% } %>	
 <% include footer.ejs %>
 </body>
 </html>

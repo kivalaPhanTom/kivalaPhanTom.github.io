@@ -1,0 +1,9 @@
+{ 
+    "_id" : ObjectId("5f0f2ada0f2c3e22ac8a60ad"), 
+    "CreateDate" : ISODate("2020-07-15T16:12:06.173+0000"), 
+    "Email" : "d2h@gmail.com", 
+    "Password" : "$2a$10$2nwcorU3VKLZosFM4EqmM.wuEIxwJjp36z5oXKxFF2vf.LpfvsVMy", 
+    "Name" : "Admin", 
+    "Role" : "admin", 
+    "__v" : NumberInt(0)
+}

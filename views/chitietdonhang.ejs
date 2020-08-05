@@ -50,6 +50,124 @@
                         </ul>
                     </div>
                 </div>
+                <% if(order.completed == 1){ %>
+                    <% if(order.completed_feedback == 0){ %>
+                        <button type="button" style="background-color: #ffc107e9; color: black; margin-top: 10px;" class="btn btn-block" data-toggle="modal" data-target="#DanhGiaForm">Đánh giá ngay</button>
+                    <% } else { %>
+                        <button type="button" style="background-color: #ffc107e9; color: black; margin-top: 10px;" class="btn btn-block" data-toggle="modal" data-target="#ReviewDanhGiaForm">Xem lại đánh giá</button>
+                    <% } %>
+                <% } %>
+                <!-- danh gia -->
+                        <div class="modal fade" id="DanhGiaForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                            <div class="modal-content" style="border-radius:10px;">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Đánh giá đơn hàng của shop</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="/feedback" method="POST">
+                                        <div>
+                                            <label for="rating" class="text-center" style="width:100%">Mức độ hài lòng:</label>
+                                            <div style="display:flex;justify-content:center;">
+                                                <div id="rating">
+                                                    <input value="<%= order._id %>" name="idOrder" style="display: none;"/>
+                                                    <input type="radio" id="star5" name="rating" value="5" />
+                                                    <label class = "full" for="star5" title="Awesome - 5 stars"></label>
+                                                    
+                                                    <input type="radio" id="star4half" name="rating" value="4.5" />
+                                                    <label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
+                                                    
+                                                    <input type="radio" id="star4" name="rating" value="4" />
+                                                    <label class = "full" for="star4" title="Pretty good - 4 stars"></label>
+                                                    
+                                                    <input type="radio" id="star3half" name="rating" value="3.5" />
+                                                    <label class="half" for="star3half" title="Meh - 3.5 stars"></label>
+                                                    
+                                                    <input type="radio" id="star3" name="rating" value="3" />
+                                                    <label class = "full" for="star3" title="Meh - 3 stars"></label>
+                                                    
+                                                    <input type="radio" id="star2half" name="rating" value="2.5" />
+                                                    <label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
+                                                    
+                                                    <input type="radio" id="star2" name="rating" value="2" />
+                                                    <label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
+                                                    
+                                                    <input type="radio" id="star1half" name="rating" value="1.5" />
+                                                    <label class="half" for="star1half" title="Meh - 1.5 stars"></label>
+                                                    
+                                                    <input type="radio" id="star1" name="rating" value="1" />
+                                                    <label class = "full" for="star1" title="Sucks big time - 1 star"></label>
+                                                    
+                                                    <input type="radio" id="starhalf" name="rating" value="0.5" />
+                                                    <label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        <div class="form-group">
+                                            <label for="exampleFormControlTextarea1">Nhận xét: (Tối đa 1000 kí tự)</label>
+                                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="feedbacks"></textarea>
+                                        </div>
+                                        <div class="modal-footer form-group" style="width:100%;justify-content:center;">
+                                            <button type="submit" class="btn" style="background-color: #ffc107e9;color:white;">Gửi đánh giá</button>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                <!-- Review danh gia -->
+                <div class="modal fade" id="ReviewDanhGiaForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                            <div class="modal-content" style="border-radius:10px;">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Đánh giá đơn hàng của shop</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="/changefeedback" method="POST">
+                                        <div>
+                                            <label for="rating" class="text-center" style="width:100%">Mức độ hài lòng:</label>
+                                            <div style="display:flex;justify-content:center;">
+                                                <div id="rating">
+                                                    <input value="<%= order._id %>" name="idOrder" style="display: none;"/>
+                                                    <% for (var i = 10; i > 0; i--) {%>
+                                                        <% if(i/2 == rating){ %>
+
+                                                            <input type="radio" id="star<%= i/2%>" name="rating" value="<%= i/2%>" checked/>
+                                                        <% } else{ %>
+                                                            <input type="radio" id="star<%= i/2%>" name="rating" value="<%= i/2%>"/>
+                                                        <% } %>
+                                                        
+                                                        <% if(i==1||i==3||i==5||i==7||i==9){ %>
+                                                            <label class = "half" for="star<%= i/2%>" ></label>
+                                                        <% } else {%>
+                                                            <label class = "full" for="star<%= i/2%>" ></label>
+                                                        <% } %>
+                                                        
+                                                    <% } %>
+                                                    
+                                                </div>
+                                            </div>
+                                            </div>
+                                        <div class="form-group">
+                                            <label for="exampleFormControlTextarea1">Nhận xét: (Tối đa 1000 kí tự)</label>
+                                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="feedbacks"><%= feedbacks %></textarea>
+                                        </div>
+                                        <div class="modal-footer form-group" style="width:100%;justify-content:center;">
+                                            <button type="submit" class="btn" style="background-color: #ffc107e9;color:white;">Sửa đánh giá</button>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
             </div>
         </div>
     </div>

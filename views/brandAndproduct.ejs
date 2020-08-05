@@ -1,92 +1,98 @@
 <% include libaryHtml.ejs %>
 <% include header.ejs %>
-        <div class="container mt-4">
-            <% for (var i=0; i < data.length; i++){ %> 
-                        
-                <% for (var j = 0; j < dataBrand.length; j++){ %> <!--Kiểm tra sản phẩm thuộc hãng nào-->
-                    <% if ( data[i].id_category.toString() ===  dataBrand[j]._id.toString()) { %>
-                        <div class="brandAndProduct">
-                            <div id="anh_sanpham">
-                                <img class="anh_sanpham"src="/image_Product/<%= dataBrand[j].image[0] %>">  
+
+<div class="container mt-4">
+    <% for (var i=0; i < data.length; i++){ %> 
+                
+        <% for (var j = 0; j < dataBrand.length; j++){ %> <!--Kiểm tra sản phẩm thuộc hãng nào-->
+            <% if ( data[i].id_category.toString() ===  dataBrand[j]._id.toString()) { %>
+                <div class="brandAndProduct">
+                    <div id="anh_sanpham">
+                        <img class="anh_sanpham"src="/image_Product/<%= dataBrand[j].image[0] %>">  
+                    </div>
+                    <div id="p_sanpham" >
+                            <p class="p_sanpham">Thương hiệu sản phẩm: <%= dataBrand[j].category_name %> </p>
+                    </div>
+                </div>       
+            <% } %>
+         
+        <% } %> 
+        <% break %>
+        <% } %> 
+    <hr>
+ <div class="row">
+    <%  for (var i = data.length; i > 0; i--) { %> <!--duyệt mảng product-->
+        <div class="detail_Sanpham col-lg-4 col-md-4 col-sm-6 col-xs-12 mt-2 <%= data[i-1].id_category %>" ><!--item-->
+            <div class="">
+                    <a class="a_anh"href="/detailPR/<%= data[i-1]._id %>"><img src="/image_Product/<%= data[i-1].image[0]%>"class="img-fluid Anh_San_Pham" ></a>
+                     <div class="div_name_product"> <p class="name_Product"><%= data[i-1].product_name %></p></div>
+                    <div class="row index">
+                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-3 container_Add_name">
+                           
+                                <% if(data[i-1].promotion_price == ''){ %>
+                                    <p class="cost_Product"><i class="fas fa-dollar-sign"></i> <span><%= data[i-1].price %> VNĐ</span></p>
+                                <% } else{ %>
+                                    <p class="cost_Product"><i class="fas fa-dollar-sign"></i> <span><%= data[i-1].promotion_price %> VNĐ</span></p>
+                                    <div class="giagoc">
+                                      <p class="p_giagoc"><%= data[i-1].price %> VNĐ</p>
+                                      <div class="div_giagoc" ></div>
+                                  </div>
+                                <% }  %>  
                             </div>
-                            <div id="p_sanpham" >
-                                    <p class="p_sanpham">Thương hiệu sản phẩm: <%= dataBrand[j].category_name %> </p>
-                            </div>
-                        </div>       
-                    <% } %>
-                 
-                <% } %> 
-                <% break %>
-                <% } %> 
-            <hr>
-         <div class="row">
-            <%  for (var i = data.length; i > 0; i--) { %> <!--duyệt mảng product-->
-                <div class="detail_Sanpham col-lg-4 col-md-4 col-sm-6 col-xs-12 mt-2 <%= data[i-1].id_category %>" ><!--item-->
-                    <div class="">
-                            <a class="a_anh"href="/detailProduct/<%= data[i-1]._id %>"><img src="/image_Product/<%= data[i-1].image[0]%>"class="img-fluid Anh_San_Pham" ></a>
-                             <div class="div_name_product"> <p class="name_Product"><%= data[i-1].product_name %></p></div>
-                            <div class="row index">
-                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-3 container_Add_name">
-                                   
-                                        <% if(data[i-1].promotion_price == ''){ %>
-                                            <p class="cost_Product"><i class="fas fa-dollar-sign"></i> <span><%= data[i-1].price %> VNĐ</span></p>
-                                        <% } else{ %>
-                                            <p class="cost_Product"><i class="fas fa-dollar-sign"></i> <span><%= data[i-1].promotion_price %> VNĐ</span></p>
-                                            <div class="giagoc">
-                                              <p class="p_giagoc"><%= data[i-1].price %> VNĐ</p>
-                                              <div class="div_giagoc" ></div>
-                                          </div>
-                                        <% }  %>  
-                                    </div>
-                                    <div class="Add_to_cart col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                                          <a href=""><i class="fas fa-cart-plus"></i></a>
-                                    </div>
-                                </div>
+                            <div class="Add_to_cart col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                  <a href=""><i class="fas fa-cart-plus"></i></a>
                             </div>
                         </div>
-               <% } %>	
+                    </div>
+                </div>
+       <% } %>	
 
-         </div>      
-       </div>
-    
-    
+ </div>      
+</div>
+
+
 <div class="empty_search diableDiv">
 </div>
-<% for (var i=0; i < data.length; i++){ %>                   
-            <div class="PhanTrang">
-                <% if (pages > 0) { %>
-                    <ul class="pagination text-center">
-                        <% if (current == 1) { %>
-                            <li class="disabled"><a>First</a></li>
-                        <% } else { %>
-                            <li><a href="/brandandproduct/<%= data[0].id_category.toString() %>/1">First</a></li>
-                        <% } %>
-                        <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
-                        <% if (i !== 1) { %>
-                            <li class="disabled"><a>...</a></li>
-                        <% } %>
-                        
-                        <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
-                            <% if (i == current) { %>
-                                <li class="active"><a><%= i %></a></li>
-                            <% } else { %>
-                                <li><a href="/brandandproduct/<%= data[0].id_category.toString() %>/<%= i %>"><%= i %></a></li>
-                            <% } %>
-                            <% if (i == Number(current) + 4 && i < pages) { %>
-                                <li class="disabled"><a>...</a></li>
-                            <% } %>
-                        <% } %>
-
-                        <% if (current == pages) { %>
-                            <li class="disabled"><a>Last</a></li>
-                        <% } else { %>
-                            <li><a href="/brandandproduct/<%= data[0].id_category.toString() %>/<%= pages %>">Last</a></li>
-                        <% } %>
-                    </ul>
+                
+    <div class="PhanTrang">
+        <% if (pages > 0) { %>
+            <ul class="pagination text-center">
+                <% if (current == 1) { %>
+                    <li class="disabled"><a>First</a></li>
+                <% } else { %>
+                    <li><a href="/brandandproduct/<%= data[0].id_category.toString() %>/1">First</a></li>
                 <% } %>
-            </div>
-    <% } %> 
-    <!--footer-->
+                <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+                <% if (i !== 1) { %>
+                    <li class="disabled"><a>...</a></li>
+                <% } %>
+                
+                <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+                    <% if (i == current) { %>
+                        <li class="active"><a><%= i %></a></li>
+                    <% } else { %>
+                        <li><a href="/brandandproduct/<%= data[0].id_category.toString() %>/<%= i %>"><%= i %></a></li>
+                    <% } %>
+                    <% if (i == Number(current) + 4 && i < pages) { %>
+                        <li class="disabled"><a>...</a></li>
+                    <% } %>
+                <% } %>
+
+                <% if (current == pages) { %>
+                    <li class="disabled"><a>Last</a></li>
+                <% } else { %>
+                    <li><a href="/brandandproduct/<%= data[0].id_category.toString() %>/<%= pages %>">Last</a></li>
+                <% } %>
+            </ul>
+        <% } %>
+    </div>
+
+<!--footer-->
+<% for(i=0; i < list_Alldata_search.length;i++){ %>
+<p class="list"><%= list_Alldata_search[i] %></p>
+<% } %>	
+
+        
     <% include footer.ejs %> 
     <!--End footer-->
     </body>
