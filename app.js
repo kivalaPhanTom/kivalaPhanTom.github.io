@@ -21,6 +21,7 @@ var app = express();
 var mongoose = require('mongoose');
 var flash = require('connect-flash'); 
 var MongoStore = require('connect-mongo')(session)
+
 //connect DB
 mongoose.set("useNewUrlParser", true);
 //database
@@ -97,5 +98,5 @@ app.use(function(err, req, res, next) {
   return res.status(err.status || 500);
   return res.render('error');
 });
-
+app.listen(process.env.PORT || 3000)
 module.exports = app;
