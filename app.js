@@ -25,7 +25,9 @@ var MongoStore = require('connect-mongo')(session)
 //connect DB
 mongoose.set("useNewUrlParser", true);
 //database
-mongoose.connect('mongodb://localhost:27017/MyDatabase')
+// mongoose.connect('mongodb://localhost:27017/MyDatabase')
+mongoose.connect('mongodb+srv://duy:duy821999@cluster0.avwup.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
+
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error!"));
 db.once("open", function(){
@@ -98,5 +100,5 @@ app.use(function(err, req, res, next) {
   return res.status(err.status || 500);
   return res.render('error');
 });
-app.listen(process.env.PORT || 3000)
+
 module.exports = app;
