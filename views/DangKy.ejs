@@ -3,56 +3,50 @@
   <head>
 
 	<% include libaryHtml.ejs %>
-
+<div class="signup_area">
 	<div class="container dangki">
-      
-        <div class="HinhVuong11 wow slideInLeft">
-
-        </div>
-        <div class="HinhVuong22 wow slideInRight">
-
-        </div class="">
-			
-			<form action="/users/register" method="post" class="beta-form-checkout2 wow zoomIn">
-				<div class="form1">
-					<div class="form2">
-						<h4 class="text-center dangkiii">Đăng kí</h4>
-						<div class="space20">&nbsp;</div>
-						<% include ./partials/messages %>
-						<div class="form-block formblock">
-							<label for="email" class="dangki2">Email</label>
-							<input style="border-radius: 4px;border: 1px solid #ccc;" type="email" id="email" class="input_dangky " name="Email" value="<%= typeof Email != 'undefined' ? Email : ''%>" required>
-						</div>
-
-						<div class="form-block">
-							<label for="your_last_name"class="dangki2">Tên đầy đủ</label>
-							<input style="border-radius: 4px;border: 1px solid #ccc;" type="text  inp" id="your_last_name" class="input_dangky " name="Name" value="<%= typeof Name != 'undefined' ? Name : ''%>" required>
-						</div>
-
-						<div class="form-block">
-							<label for="adress"class="dangki2">Địa chỉ</label>
-							<input style="border-radius: 4px;border: 1px solid #ccc;" type="text  " id="adress" class="input_dangky " name="Address" value="<%= typeof Address != 'undefined' ? Address : ''%>" required>
-						</div>
-						<div class="form-block">
-							<label for="phone" class="dangki2">Số điện thoại</label>
-							<input style="border-radius: 4px;border: 1px solid #ccc;" type="text  inp" id="phone"  class="input_dangky  " name="Phone" value="<%= typeof Phone != 'undefined' ? Phone : ''%>" required>
-						</div>
-						<div class="form-block">
-							<label for="phone" class="dangki2">Mật khẩu</label>
-							<input style="border-radius: 4px;border: 1px solid #ccc;" type="password" id="phone"  class="input_dangky " name="Password" value="<%= typeof Password != 'undefined' ? Password : ''%>" required>
-						</div>
-						<div class="form-block">
-							<label for="phone" class="dangki2">Nhập lại mật khẩu</label>
-							<input style="border-radius: 4px;border: 1px solid #ccc;" type="password" id="pass-word"  class="input_dangky " name="Password1" value="<%= typeof Password1 != 'undefined' ? Password1 : ''%>" required>
-						</div>
-						<button type="submit" class="btn btn-primary btn-block">Tạo Tài Khoản</button>
-						<div class="small"><a href="login">Đã có tài khoản</a></div>
-						
+		<form action="/users/register" method="post" class="beta-form-checkout2 wow zoomIn">
+			<div class="form1">
+				<div class="form2">
+					<h4 class="text-center dangkiii">Đăng kí</h4>
+					<div class="space20">&nbsp;</div>
+					<% include ./partials/messages %>
+					<div class="form-block formblock">
+						<label for="email" class="dangki2">Email</label>
+						<input style="border-radius: 4px;border: 1px solid #ccc;" type="email" id="email" class="input_dangky " name="Email" value="<%= typeof Email != 'undefined' ? Email : ''%>" required>
 					</div>
-					<div class="col-sm-3"></div>
+
+					<div class="form-block">
+						<label for="your_last_name"class="dangki2">Tên đầy đủ</label>
+						<input style="border-radius: 4px;border: 1px solid #ccc;" type="text  inp" id="your_last_name" class="input_dangky " name="Name" value="<%= typeof Name != 'undefined' ? Name : ''%>" required>
+					</div>
+
+					<div class="form-block">
+						<label for="adress"class="dangki2">Địa chỉ</label>
+						<input style="border-radius: 4px;border: 1px solid #ccc;" type="text  " id="adress" class="input_dangky " name="Address" value="<%= typeof Address != 'undefined' ? Address : ''%>" required>
+					</div>
+					<div class="form-block">
+						<label for="phone" class="dangki2">Số điện thoại</label>
+						<input style="border-radius: 4px;border: 1px solid #ccc;" type="text  inp" id="phone"  class="input_dangky  " name="Phone" value="<%= typeof Phone != 'undefined' ? Phone : ''%>" required>
+					</div>
+					<div class="form-block">
+						<label for="phone" class="dangki2">Mật khẩu</label>
+						<input style="border-radius: 4px;border: 1px solid #ccc;" type="password" id="phone"  class="input_dangky " name="Password" value="<%= typeof Password != 'undefined' ? Password : ''%>" required>
+					</div>
+					<div class="form-block">
+						<label for="phone" class="dangki2">Nhập lại mật khẩu</label>
+						<input style="border-radius: 4px;border: 1px solid #ccc;" type="password" id="pass-word"  class="input_dangky " name="Password1" value="<%= typeof Password1 != 'undefined' ? Password1 : ''%>" required>
+					</div>
+					<button type="submit" class="btn btn-primary btn-block btn_create_account">Tạo Tài Khoản</button>
+					<div class="small"><a href="login">Đã có tài khoản</a></div>
+					
 				</div>
-			</form>
-		
-	</div> <!-- .container -->
+				<div class="col-sm-3"></div>
+			</div>
+		</form>
+	
+</div> <!-- .container -->
+</div>
+
   </body>
 </html>

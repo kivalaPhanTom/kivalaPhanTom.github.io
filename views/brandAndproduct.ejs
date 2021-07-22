@@ -22,7 +22,7 @@
     <hr>
  <div class="row">
     <%  for (var i = data.length; i > 0; i--) { %> <!--duyệt mảng product-->
-        <div class="detail_Sanpham col-lg-4 col-md-4 col-sm-6 col-xs-12 mt-2 <%= data[i-1].id_category %>" ><!--item-->
+        <div class="detail_Sanpham col-lg-3 col-md-4 col-sm-6 col-xs-12 mt-2 <%= data[i-1].id_category %>" ><!--item-->
             <div class="">
                     <a class="a_anh"href="/detailPR/<%= data[i-1]._id %>"><img src="/image_Product/<%= data[i-1].image[0]%>"class="img-fluid Anh_San_Pham" ></a>
                      <div class="div_name_product"> <p class="name_Product"><%= data[i-1].product_name %></p></div>
@@ -58,9 +58,9 @@
         <% if (pages > 0) { %>
             <ul class="pagination text-center">
                 <% if (current == 1) { %>
-                    <li class="disabled"><a>First</a></li>
+                    <li class="disabled"><a>Trang đầu</a></li>
                 <% } else { %>
-                    <li><a href="/brandandproduct/<%= data[0].id_category.toString() %>/1">First</a></li>
+                    <li><a href="/brandandproduct/<%= data[0].id_category.toString() %>/1">Trang đầu</a></li>
                 <% } %>
                 <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
                 <% if (i !== 1) { %>
@@ -79,9 +79,9 @@
                 <% } %>
 
                 <% if (current == pages) { %>
-                    <li class="disabled"><a>Last</a></li>
+                    <li class="disabled"><a>Trang cuối</a></li>
                 <% } else { %>
-                    <li><a href="/brandandproduct/<%= data[0].id_category.toString() %>/<%= pages %>">Last</a></li>
+                    <li><a href="/brandandproduct/<%= data[0].id_category.toString() %>/<%= pages %>">Trang cuối</a></li>
                 <% } %>
             </ul>
         <% } %>

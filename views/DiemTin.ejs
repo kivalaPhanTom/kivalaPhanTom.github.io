@@ -35,9 +35,9 @@
     <% if (pages > 0) { %>
         <ul class="pagination text-center">
             <% if (current == 1) { %>
-                <li class="disabled"><a>First</a></li>
+                <li class="disabled"><a>Trang đầu</a></li>
             <% } else { %>
-                <li><a href="/diemtin/1">First</a></li>
+                <li><a href="/diemtin/1">Trang đầu</a></li>
             <% } %>
             <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
             <% if (i !== 1) { %>
@@ -54,9 +54,9 @@
                 <% } %>
             <% } %>
             <% if (current == pages) { %>
-                <li class="disabled"><a>Last</a></li>
+                <li class="disabled"><a>Trang cuối</a></li>
             <% } else { %>
-                <li><a href="/diemtin/<%= pages %>">Last</a></li>
+                <li><a href="/diemtin/<%= pages %>">Trang cuối</a></li>
             <% } %>
         </ul>
     <% } %>

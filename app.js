@@ -25,7 +25,7 @@ var MongoStore = require('connect-mongo')(session)
 //connect DB
 mongoose.set("useNewUrlParser", true);
 //database
-// mongoose.connect('mongodb://localhost:27017/MyDatabase')
+//mongoose.connect('mongodb://localhost:27017/MyDatabase')
 mongoose.connect('mongodb+srv://duy:duy821999@cluster0.avwup.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
 
 var db = mongoose.connection;
