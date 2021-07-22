@@ -2,7 +2,8 @@
     var router = express.Router();
     var mongodb = require('mongodb')
     var MongoClient = mongodb.MongoClient;
-    var urldb = 'mongodb://localhost:27017'
+    // var urldb = 'mongodb://localhost:27017'
+    var urldb = 'mongodb+srv://duy:duy821999@cluster0.avwup.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
     var Cart = require("../models/Cart")
     var Product = require("../models/Product");
     var ModelNews =require('../models/News');
