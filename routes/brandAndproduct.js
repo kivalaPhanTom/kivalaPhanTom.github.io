@@ -27,7 +27,7 @@ router.get('/brandandproduct/:id/:page',  function(req, res, next) {
   });
  /* end search suggestion */
    var id= req.params.id;
-   var perPage = 9; /* perPage - số dòng dữ liệu trên mỗi trang */
+   var perPage = 8; /* perPage - số dòng dữ liệu trên mỗi trang */
    var page = req.params.page || 1; /* page - biến chứa số trang hiện tại (Lấy từ request) */
    ModelProducts.find({id_category:id})
    .skip((perPage * page) - perPage) /* mỗi trang chúng ta cần phải bỏ qua ((perPage * page) - perPage) giá trị (trên trang đầu tiên giá trị của bỏ qua phải là 0): */

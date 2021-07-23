@@ -135,7 +135,7 @@
   <div class="row">
 	  <div class="col-lg-12">
 		  <div class="row">
-			<% if (dataProduct.length <6) { %> <!--Trường hợp số phần tử trong mảng dataProduct  nhỏ hơn 6, vẫn cho phép in ra phần tử-->
+			<% if (dataProduct.length <8) { %> <!--Trường hợp số phần tử trong mảng dataProduct  nhỏ hơn 8, vẫn cho phép in ra phần tử-->
 				<%  for (var i =dataProduct.length; i > 0; i--) { %> <!--duyệt mảng product-->
 					<div class="detail_Sanpham  col-lg-3 col-md-6 col-sm-6 col-xs-12 mt-2 <%= dataProduct[i-1].id_category %>" ><!--item-->
 						<div class="">
@@ -161,8 +161,8 @@
 								</div>
 							</div>
 				   <% } %>
-				<% } else { %><!--Trường hợp số phần tử trong mảng  dataProduct lớn hơn hoặc bằng 6, thì chỉ có phép 6 phần tử được in ra-->
-					<%  for (var i =dataProduct.length; i > dataProduct.length-6; i--) { %> <!--duyệt mảng product-->
+				<% } else { %><!--Trường hợp số phần tử trong mảng  dataProduct lớn hơn hoặc bằng 8, thì chỉ có phép 8 phần tử được in ra-->
+					<%  for (var i =dataProduct.length; i > dataProduct.length-8; i--) { %> <!--duyệt mảng product-->
 						<div class="detail_Sanpham col-lg-3 col-md-4 col-sm-6 col-xs-12 mt-2 <%= dataProduct[i-1].id_category %>" ><!--item-->
 							<div class="">
 									<a class="a_anh"href="/detailPR/<%= dataProduct[i-1]._id %>"><img src="/image_Product/<%= dataProduct[i-1].image[0]%>"class="img-fluid Anh_San_Pham" ></a>
@@ -206,7 +206,7 @@
 		<div class="col-lg-12">
 			<div class="row">
 
-				<% if (dataProduct.length <6) { %> <!--Trường hợp số phần tử trong mảng dataProduct  nhỏ hơn 6, vẫn cho phép in ra phần tử-->
+				<% if (dataProduct.length <8) { %> <!--Trường hợp số phần tử trong mảng dataProduct  nhỏ hơn 8, vẫn cho phép in ra phần tử-->
 					<%  for (var i = dataProduct.length; i > 0; i--) { %> <!--duyệt mảng product-->
 						<% if( dataProduct[i-1].promotion_price !== ''){ %> <!--Lọc ra sản phẩm có giảm giá-->
 								<div class="detail_Sanpham col-lg-3 col-md-4 col-sm-6 col-xs-12 mt-2 <%=  dataProduct[i-1].id_category %>" ><!--item-->
@@ -231,8 +231,8 @@
 							 <% }  %>   
 						<% } %>	
 				
-				<% } else { %><!--Trường hợp số phần tử trong mảng  dataProduct lớn hơn hoặc bằng 6, thì chỉ có phép 6 phần tử được in ra-->
-					<%  for (var i = dataProduct.length; i > dataProduct.length-6; i--) { %> <!--duyệt mảng product-->
+				<% } else { %><!--Trường hợp số phần tử trong mảng  dataProduct lớn hơn hoặc bằng 8, thì chỉ có phép 8 phần tử được in ra-->
+					<%  for (var i = dataProduct.length; i > dataProduct.length-8; i--) { %> <!--duyệt mảng product-->
 						<% if( dataProduct[i-1].promotion_price !== ''){ %> <!--Lọc ra sản phẩm có giảm giá-->
 								<div class="detail_Sanpham col-lg-3 col-md-4 col-sm-6 col-xs-12 mt-2 <%=  dataProduct[i-1].id_category %>" ><!--item-->
 									<div class="">

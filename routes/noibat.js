@@ -107,7 +107,7 @@ router.get('/noibat/:page',  function(req, res, next) {
       });    
     });
   /* end search suggestion */
-  var perPage = 9; /* perPage - số dòng dữ liệu trên mỗi trang */
+  var perPage = 8; /* perPage - số dòng dữ liệu trên mỗi trang */
   var page = req.params.page || 1; /* page - biến chứa số trang hiện tại (Lấy từ request) */
 
   ModelProducts.find({Top:'Có'})
